@@ -2,7 +2,7 @@
 
 namespace PaymentGateway.Api.Domain.Repositories;
 
-public class PaymentsRepository
+public class InMemoryPaymentsRepository
 {
     public List<PostPaymentResponse> Payments = new();
     

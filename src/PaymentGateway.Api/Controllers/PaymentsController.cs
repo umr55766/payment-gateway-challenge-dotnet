@@ -9,17 +9,17 @@ namespace PaymentGateway.Api.Controllers;
 [ApiController]
 public class PaymentsController : Controller
 {
-    private readonly PaymentsRepository _paymentsRepository;
+    private readonly InMemoryPaymentsRepository _inMemoryPaymentsRepository;
 
-    public PaymentsController(PaymentsRepository paymentsRepository)
+    public PaymentsController(InMemoryPaymentsRepository inMemoryPaymentsRepository)
     {
-        _paymentsRepository = paymentsRepository;
+        _inMemoryPaymentsRepository = inMemoryPaymentsRepository;
     }
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<PostPaymentResponse?>> GetPaymentAsync(Guid id)
     {
-        var payment = _paymentsRepository.Get(id);
+        var payment = _inMemoryPaymentsRepository.Get(id);
 
         return new OkObjectResult(payment);
     }
