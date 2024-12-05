@@ -10,7 +10,7 @@ public class PaymentBuilderTest
     [Fact]
     public void PaymentBuilder_ShouldBuildPayment_WithValidValues()
     {
-        var paymentId = "12345";
+        var paymentId = Guid.NewGuid();
         var paymentStatus = PaymentStatus.Authorized;
         var amount = 1000;
         var currency = "USD";

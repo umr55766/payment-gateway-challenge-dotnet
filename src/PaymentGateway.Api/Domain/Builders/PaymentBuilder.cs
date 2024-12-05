@@ -6,7 +6,7 @@ namespace PaymentGateway.Api.Domain.Builders;
 
 public class PaymentBuilder
 {
-    private string _id;
+    private Guid _id;
     private PaymentStatus _status;
     private Money _money;
     private Card _card;
@@ -18,7 +18,7 @@ public class PaymentBuilder
     private int _cardExpiryYear;
     private string _cvv;
 
-    public PaymentBuilder WithId(string id)
+    public PaymentBuilder WithId(Guid id)
     {
         _id = id;
         return this;

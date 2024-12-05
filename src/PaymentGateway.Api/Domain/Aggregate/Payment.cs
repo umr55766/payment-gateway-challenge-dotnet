@@ -5,12 +5,12 @@ namespace PaymentGateway.Api.Domain.Aggregate;
 
 public class Payment
 {
-    public string Id { get; }
+    public Guid Id { get; }
     public PaymentStatus Status { get; }
     public Money Money { get; }
     public Card Card { get; }
 
-    public Payment(string id, PaymentStatus status, Money money, Card card)
+    public Payment(Guid id, PaymentStatus status, Money money, Card card)
     {
         Id = id;
         Status = status;
