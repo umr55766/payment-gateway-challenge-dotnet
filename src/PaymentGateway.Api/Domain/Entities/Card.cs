@@ -13,9 +13,9 @@ public class Card
         if (string.IsNullOrEmpty(cardNumber) || !cardNumber.All(char.IsDigit) || cardNumber.Length < 14 || cardNumber.Length > 19)
             throw new ArgumentException("Card number must be between 14 and 19 digits.");
         Number = cardNumber;
-        LastFourDigits = cardNumber.Substring(cardNumber.Length - 4);
+        LastFourDigits = cardNumber[^4..];
 
-        if (expiryMonth < 1 || expiryMonth > 12)
+        if (expiryMonth is < 1 or > 12)
             throw new ArgumentException("Expiry month must be between 1 and 12.");
         ExpiryMonth = expiryMonth;
 
