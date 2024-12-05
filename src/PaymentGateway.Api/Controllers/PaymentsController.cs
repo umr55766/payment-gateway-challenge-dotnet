@@ -19,8 +19,7 @@ public class PaymentsController : Controller
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<PostPaymentResponse?>> GetPaymentAsync(Guid id)
     {
-        var payment = _inMemoryPaymentsRepository.Get(id);
-
+        var payment = _inMemoryPaymentsRepository.GetById(id);
         return new OkObjectResult(payment);
     }
 }
