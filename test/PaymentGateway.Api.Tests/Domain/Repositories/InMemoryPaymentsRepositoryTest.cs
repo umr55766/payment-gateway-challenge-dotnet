@@ -26,20 +26,21 @@ public class InMemoryPaymentsRepositoryTest
                 .WithCardExpiryYear(2025)
                 .WithCardCvv("123")
                 .Build();
+
             _repository.Add(payment);
-            
             var storedPayment = _repository.GetById(paymentId);
 
             storedPayment.Should().NotBeNull();
-            storedPayment.Id.Should().Be("1");
+            storedPayment.Id.Should().Be(paymentId);
             storedPayment.Status.Should().Be(PaymentStatus.Authorized);
         }
 
         [Fact]
         public void Add_ShouldThrowPaymentAlreadyExistsException_WhenPaymentAlreadyExists()
         {
+            Guid paymentId = Guid.NewGuid();
             var payment1 = new PaymentBuilder()
-                .WithId(Guid.NewGuid())
+                .WithId(paymentId)
                 .WithStatus(PaymentStatus.Authorized)
                 .WithAmount(1000)
                 .WithCurrency("USD")
@@ -49,8 +50,9 @@ public class InMemoryPaymentsRepositoryTest
                 .WithCardExpiryYear(2025)
                 .WithCardCvv("123")
                 .Build();
+
             var payment2 = new PaymentBuilder()
-                .WithId(Guid.NewGuid())
+                .WithId(paymentId)
                 .WithStatus(PaymentStatus.Declined)
                 .WithAmount(500)
                 .WithCurrency("USD")
@@ -65,7 +67,7 @@ public class InMemoryPaymentsRepositoryTest
             Action act = () => _repository.Add(payment2);
 
             act.Should().Throw<PaymentAlreadyExistsException>()
-                .WithMessage("Payment with ID 1 already exists.");
+                .WithMessage($"Payment with ID {paymentId} already exists.");
         }
 
         [Fact]
@@ -88,15 +90,16 @@ public class InMemoryPaymentsRepositoryTest
             var retrievedPayment = _repository.GetById(paymentId);
 
             retrievedPayment.Should().NotBeNull();
-            retrievedPayment.Id.Should().Be("1");
+            retrievedPayment.Id.Should().Be(paymentId);
         }
 
         [Fact]
         public void GetById_ShouldThrowPaymentNotFoundException_WhenPaymentNotFound()
         {
-            Action act = () => _repository.GetById(Guid.NewGuid());
+            Guid paymentId = Guid.NewGuid();
+            Action act = () => _repository.GetById(paymentId);
 
             act.Should().Throw<PaymentNotFoundException>()
-                .WithMessage("Payment with ID non-existing-id not found.");
+                .WithMessage($"Payment with ID {paymentId} not found.");
         }
 }
