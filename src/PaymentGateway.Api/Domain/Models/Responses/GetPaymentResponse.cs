@@ -1,6 +1,8 @@
-﻿namespace PaymentGateway.Api.Models.Responses;
+﻿using PaymentGateway.Api.Models;
 
-public class PostPaymentResponse
+namespace PaymentGateway.Api.Domain.Models.Responses;
+
+public class GetPaymentResponse
 {
     public Guid Id { get; set; }
     public PaymentStatus Status { get; set; }
