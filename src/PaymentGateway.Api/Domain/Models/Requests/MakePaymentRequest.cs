@@ -9,7 +9,7 @@ public class MakePaymentRequest
     public int Amount { get; set; }
     public string CVV { get; set; }
 
-    private static readonly List<string> ValidCurrencies = new List<string> { "USD", "EUR", "GBP" };
+    private static readonly List<string> ValidCurrencies = ["USD", "EUR", "GBP"];
     
     public bool IsValid()
     {
@@ -18,7 +18,7 @@ public class MakePaymentRequest
             return false;
         }
 
-        if (ExpiryMonth < 1 || ExpiryMonth > 12)
+        if (ExpiryMonth is < 1 or > 12)
         {
             return false;
         }
