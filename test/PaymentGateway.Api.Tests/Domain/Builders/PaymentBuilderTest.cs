@@ -1,12 +1,11 @@
 using FluentAssertions;
 
 using PaymentGateway.Api.Domain.Builders;
-using PaymentGateway.Api.Domain.Entities;
 using PaymentGateway.Api.Domain.Enums;
 
-namespace PaymentGateway.Api.Tests.Domain.Aggregate;
+namespace PaymentGateway.Api.Tests.Domain.Builders;
 
-public class PaymentTest
+public class PaymentBuilderTest
 {
     [Fact]
     public void PaymentBuilder_ShouldBuildPayment_WithValidValues()
