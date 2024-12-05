@@ -16,3 +16,7 @@ PaymentGateway.sln
 ```
 
 Feel free to change the structure of the solution, use a different test library etc.
+
+
+
+![codecov](https://codecov.io/gh/umr55766/payment-gateway-challenge-dotnet/branch/main/graph/badge.svg)
