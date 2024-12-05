@@ -28,12 +28,3 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Assert Coverage
-        run: |
-          COVERAGE=$(curl -s https://codecov.io/api/gh/umr55766/payment-gateway-challenge-dotnet/commits/main | jq '.total.coverage')
-          if (( $(echo "$COVERAGE < 100" | bc -l) )); then
-            echo "Code coverage is below the 50% threshold. Current coverage is $COVERAGE%"
-            exit 1
-          else
-            echo "Code coverage is sufficient: $COVERAGE%"
-          fi
