@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using PaymentGateway.Api.Controllers;
 using PaymentGateway.Api.Domain.Models.Responses;
-using PaymentGateway.Api.Services;
+using PaymentGateway.Api.Domain.Repositories;
 
 namespace PaymentGateway.Api.Tests;
 

@@ -1,6 +1,6 @@
 ﻿using PaymentGateway.Api.Domain.Models.Responses;
 
-namespace PaymentGateway.Api.Services;
+namespace PaymentGateway.Api.Domain.Repositories;
 
 public class PaymentsRepository
 {
