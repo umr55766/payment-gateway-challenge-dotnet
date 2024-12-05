@@ -49,7 +49,7 @@ public class PaymentBuilderTest
     {
         Action action = () => new PaymentBuilder().Build();
 
-        action.Should().Throw<ArgumentNullException>()
-            .WithMessage("Value cannot be null. (Parameter '_id')");
+        action.Should().Throw<ArgumentException>()
+            .WithMessage("Currency cannot be null or empty. (Parameter 'currency')");
     }
 }
