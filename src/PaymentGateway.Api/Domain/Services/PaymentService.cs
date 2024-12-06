@@ -20,24 +20,34 @@ public class PaymentService
 
     public async Task<MakePaymentResponse> MakePayment(MakePaymentRequest request)
     {
+        Payment payment = InitiateAPayment(request);
+        BankResponse bankResponse = await ProcessPaymentWithBank(payment);
+        SaveResponseInDatabase(payment, bankResponse);
+
+        return PaymentMapper.MapToResponse(payment);
+    }
+
+    private void SaveResponseInDatabase(Payment payment, BankResponse bankResponse)
+    {
+        payment.PatchBankResponse(bankResponse);
+        _paymentRepository.Update(payment);
+    }
+
+    private async Task<BankResponse> ProcessPaymentWithBank(Payment payment)
+    {
+        var bankRequest = BankRequestMapper.MapToBankRequest(payment);
+        var bankResponse = await _bankClient.MakePaymentAsync(bankRequest);
+        return bankResponse;
+    }
+
+    private Payment InitiateAPayment(MakePaymentRequest request)
+    {
         if (!request.IsValid())
             throw new ArgumentException("Invalid payment request");
 
         var payment = PaymentMapper.MapToPayment(request);
-
         _paymentRepository.Add(payment);
-
-        var bankRequest = BankRequestMapper.MapToBankRequest(payment);
-
-        var bankResponse = await _bankClient.MakePaymentAsync(bankRequest);
-
-        payment.PatchBankResponse(bankResponse);
-
-        _paymentRepository.Update(payment);
-
-        var response = PaymentMapper.MapToResponse(payment);
-
-        return response;
+        return payment;
     }
 
     public Payment ProcessPayment(Payment payment)
