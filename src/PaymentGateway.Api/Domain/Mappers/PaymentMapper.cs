@@ -48,4 +48,20 @@ public class PaymentMapper
             Amount = payment.Money.Amount
         };
     }
+
+    public static GetPaymentResponse MapToGetPaymentResponse(Payment payment)
+    {
+        var response = new GetPaymentResponse
+        {
+            Id = payment.Id,
+            Status = payment.Status,
+            CardNumberLastFour = payment.Card.LastFourDigits,
+            ExpiryMonth = payment.Card.ExpiryMonth,
+            ExpiryYear = payment.Card.ExpiryYear,
+            Currency = payment.Money.Currency,
+            Amount = payment.Money.Amount
+        };
+
+        return response;
+    }
 }

@@ -27,6 +27,11 @@ public class PaymentService
         return PaymentMapper.MapToResponse(payment);
     }
 
+    public async Task<GetPaymentResponse> GetPaymentDetails(Guid id)
+    {
+        return PaymentMapper.MapToGetPaymentResponse(_paymentRepository.GetById(id));
+    }
+
     private void SaveResponseInDatabase(Payment payment, BankResponse bankResponse)
     {
         payment.PatchBankResponse(bankResponse);

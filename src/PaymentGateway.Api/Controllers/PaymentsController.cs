@@ -21,10 +21,9 @@ public class PaymentsController : Controller
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<MakePaymentResponse?>> GetPaymentAsync(Guid id)
+    public async Task<ActionResult<GetPaymentResponse?>> GetPaymentAsync(Guid id)
     {
-        var payment = _inMemoryPaymentsRepository.GetById(id);
-        return new OkObjectResult(payment);
+        return await _paymentService.GetPaymentDetails(id);
     }
 
     [HttpPost]
