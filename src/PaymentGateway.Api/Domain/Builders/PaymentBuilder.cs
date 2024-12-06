@@ -1,6 +1,7 @@
 using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Entities;
 using PaymentGateway.Api.Domain.Enums;
+using PaymentGateway.Api.Domain.Models.Requests;
 
 namespace PaymentGateway.Api.Domain.Builders;
 
@@ -74,11 +75,33 @@ public class PaymentBuilder
     
     public Payment Build()
     {
-        if (_id == null)
+        if (_id == Guid.Empty)
             throw new ArgumentNullException(nameof(_id));
         
         _money = new Money(_amount, _currency, _precision);
         _card = new Card(_cardNumber, _cardExpiryMonth, _cardExpiryYear, _cvv);
         return new Payment(_id, _status, _money, _card);
+    }
+
+    public PaymentBuilder FromRequest(MakePaymentRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        if (!request.IsValid())
+        {
+            throw new InvalidOperationException("Invalid MakePaymentRequest.");
+        }
+
+        _id = Guid.NewGuid();
+        _status = PaymentStatus.Pending;
+        _amount = request.Amount;
+        _currency = request.Currency;
+        _precision = 2;
+        _cardNumber = request.CardNumber;
+        _cardExpiryMonth = request.ExpiryMonth;
+        _cardExpiryYear = request.ExpiryYear;
+        _cvv = request.CVV;
+
+        return this;
     }
 }
