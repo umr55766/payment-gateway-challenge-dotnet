@@ -3,6 +3,7 @@ using FluentAssertions;
 using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Entities;
 using PaymentGateway.Api.Domain.Enums;
+using PaymentGateway.Api.Domain.Models.Responses;
 
 namespace PaymentGateway.Api.Tests.Domain.Aggregate;
 
@@ -49,5 +50,25 @@ public class PaymentTest
 
         action.Should().Throw<ArgumentNullException>()
             .WithMessage("Value cannot be null. (Parameter 'card')");
+    }
+
+    [Fact]
+    public void PatchBankResponse_ShouldUpdatePaymentWithBankResponse()
+    {
+        var payment = new Payment(
+            Guid.NewGuid(),
+            PaymentStatus.Pending,
+            new Money(1000, "USD", 2),
+            new Card("1234567812345678", 12, 2025, "123"));
+
+        var bankResponse = new BankResponse
+        {
+            Authorized = true,
+            AuthorizationCode = "12345678"
+        };
+        
+        payment.PatchBankResponse(bankResponse);
+        
+        payment.Status.Should().Be(PaymentStatus.Authorized);
     }
 }
