@@ -26,8 +26,8 @@ Feel free to change the structure of the solution, use a different test library 
 
 
 # TODO
-- [ ] Make payment endpoint
-- [ ] Make payment request validation
+- [X] Make payment endpoint
+- [X] Make payment request validation
 - [ ] Currency validation
 - [ ] Right value to store Money - Value, Currency ISO, Precision
 - [ ] Standardize the Errors
@@ -37,6 +37,6 @@ Feel free to change the structure of the solution, use a different test library 
 - [ ] Integration test - Newman, Postman
 - [ ] Load test - K6
 - [ ] Dockerize the service
-- [ ] Script to run tests
+- [ ] Script to build, execute app and run tests
 - [X] Create Github repo with CI
 - [ ] Add CD
