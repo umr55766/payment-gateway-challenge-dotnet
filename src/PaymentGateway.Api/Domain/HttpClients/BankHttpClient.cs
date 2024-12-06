@@ -3,7 +3,7 @@ using PaymentGateway.Api.Domain.Models.Responses;
 
 namespace PaymentGateway.Api.Domain.HttpClients;
 
-public class BankHttpClient
+public class BankHttpClient : IBankClient
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<BankHttpClient> _logger;
