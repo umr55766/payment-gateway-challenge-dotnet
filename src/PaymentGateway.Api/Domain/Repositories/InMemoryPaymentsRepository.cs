@@ -26,4 +26,14 @@ public class InMemoryPaymentsRepository
 
         return payment;
     }
+    
+    public void Update(Payment payment)
+    {
+        if (!_payments.TryGetValue(payment.Id, out var _))
+        {
+            throw new PaymentNotFoundException(payment.Id);
+        }
+        
+        _payments[payment.Id] = payment;
+    }
 }

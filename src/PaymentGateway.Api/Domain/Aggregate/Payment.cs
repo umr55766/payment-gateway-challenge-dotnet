@@ -6,7 +6,7 @@ namespace PaymentGateway.Api.Domain.Aggregate;
 public class Payment
 {
     public Guid Id { get; }
-    public PaymentStatus Status { get; }
+    public PaymentStatus Status { get; set; }
     public Money Money { get; }
     public Card Card { get; }
 
