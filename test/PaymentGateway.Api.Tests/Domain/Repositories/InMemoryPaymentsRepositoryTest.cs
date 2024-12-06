@@ -1,5 +1,6 @@
 using FluentAssertions;
 
+using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Builders;
 using PaymentGateway.Api.Domain.Enums;
 using PaymentGateway.Api.Domain.Exceptions;
@@ -140,7 +141,7 @@ public class InMemoryPaymentsRepositoryTest
                 .WithCardCvv("123")
                 .Build();
             _repository.Add(payment);
-            payment.Status = PaymentStatus.Authorized;
+            payment.MarkAsAuthorized();
             
             Action act = () => _repository.Update(payment);
             

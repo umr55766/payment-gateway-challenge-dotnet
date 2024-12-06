@@ -17,4 +17,9 @@ public class Payment
         Money = money ?? throw new ArgumentNullException(nameof(money));
         Card = card ?? throw new ArgumentNullException(nameof(card));
     }
+
+    public void MarkAsAuthorized()
+    {
+        Status = PaymentStatus.Authorized;
+    }
 }
