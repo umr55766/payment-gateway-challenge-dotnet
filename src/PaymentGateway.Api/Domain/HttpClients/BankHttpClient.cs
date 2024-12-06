@@ -1,5 +1,8 @@
+using Microsoft.Extensions.Options;
+
 using PaymentGateway.Api.Domain.Models.Requests;
 using PaymentGateway.Api.Domain.Models.Responses;
+using PaymentGateway.Api.Domain.Settings;
 
 namespace PaymentGateway.Api.Domain.HttpClients;
 
@@ -9,11 +12,12 @@ public class BankHttpClient : IBankClient
     private readonly ILogger<BankHttpClient> _logger;
     private readonly string _baseUrl;
 
-    public BankHttpClient(HttpClient httpClient, ILogger<BankHttpClient> logger, IConfiguration configuration)
+    public BankHttpClient(HttpClient httpClient, ILogger<BankHttpClient> logger, IOptions<BankClientSettings> configuration)
     {
         _httpClient = httpClient;
         _logger = logger;
-        _baseUrl = configuration["BankApi:BaseUrl"];
+        _httpClient.BaseAddress = new Uri(configuration.Value.BaseUrl);
+        _httpClient.Timeout = new TimeSpan(0, 0, configuration.Value.TimeoutInSeconds);
     }
 
     public async Task<BankResponse> MakePaymentAsync(BankRequest request)
@@ -44,6 +48,6 @@ public class BankHttpClient : IBankClient
 
     private string GetMakePaymentUrl()
     {
-        return $"{_baseUrl}/payments";
+        return "payments";
     }
 }

@@ -3,8 +3,8 @@ using System.Net.Http.Json;
 
 using FluentAssertions;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 using Moq;
 using Moq.Protected;
@@ -12,6 +12,7 @@ using Moq.Protected;
 using PaymentGateway.Api.Domain.HttpClients;
 using PaymentGateway.Api.Domain.Models.Requests;
 using PaymentGateway.Api.Domain.Models.Responses;
+using PaymentGateway.Api.Domain.Settings;
 
 namespace PaymentGateway.Api.Tests.Domain.HttpClients;
 
@@ -25,16 +26,14 @@ public class BankHttpClientTest
         Mock<ILogger<BankHttpClient>> loggerMock = new();
         _mockedHandler = new Mock<HttpMessageHandler>();
         var httpClient = new HttpClient(_mockedHandler.Object);
-        
-        var configData = new Dictionary<string, string>
+        var configuration = new Mock<IOptions<BankClientSettings>>();
+        configuration.Setup(x => x.Value).Returns(new BankClientSettings
         {
-            { "BankApi:BaseUrl", "http://localhost:8080" }
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(configData)
-            .Build();
+            BaseUrl = "http://localhost:8080",
+            TimeoutInSeconds = 30,
+        });
         
-        _bankHttpClient = new BankHttpClient(httpClient, loggerMock.Object, configuration);
+        _bankHttpClient = new BankHttpClient(httpClient, loggerMock.Object, configuration.Object);
     }
 
     [Fact]
