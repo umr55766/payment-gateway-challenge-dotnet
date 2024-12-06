@@ -13,7 +13,7 @@ using PaymentGateway.Api.Domain.HttpClients;
 using PaymentGateway.Api.Domain.Models.Requests;
 using PaymentGateway.Api.Domain.Models.Responses;
 
-namespace PaymentGateway.Api.Tests.Domain.Adapters;
+namespace PaymentGateway.Api.Tests.Domain.HttpClients;
 
 public class BankHttpClientTest
 {
