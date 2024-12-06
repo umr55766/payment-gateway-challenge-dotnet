@@ -20,7 +20,7 @@ public class BankHttpClient
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/payments", request);
+            var response = await _httpClient.PostAsJsonAsync(GetMakePaymentUrl(), request);
 
             if (response.IsSuccessStatusCode)
             {
@@ -40,5 +40,10 @@ public class BankHttpClient
             _logger.LogError(ex, "Error while making payment request to the bank.");
             throw new HttpRequestException("Error communicating with the bank.", ex);
         }
+    }
+
+    private string GetMakePaymentUrl()
+    {
+        return $"{_baseUrl}/payments";
     }
 }

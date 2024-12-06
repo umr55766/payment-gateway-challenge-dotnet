@@ -23,3 +23,20 @@ Feel free to change the structure of the solution, use a different test library 
 ![codecov](https://codecov.io/gh/umr55766/payment-gateway-challenge-dotnet/branch/main/graph/badge.svg)
 
 ![codecov](https://codecov.io/github/umr55766/payment-gateway-challenge-dotnet/graphs/tree.svg?token=A5OH2E0E3B)
+
+
+# TODO
+- [ ] Make payment endpoint
+- [ ] Make payment request validation
+- [ ] Currency validation
+- [ ] Right value to store Money - Value, Currency ISO, Precision
+- [ ] Standardize the Errors
+- [ ] Get payment endpoint
+- [ ] Ensure thread safety
+- [ ] Contract test - Swagger, Json
+- [ ] Integration test - Newman, Postman
+- [ ] Load test - K6
+- [ ] Dockerize the service
+- [ ] Script to run tests
+- [X] Create Github repo with CI
+- [ ] Add CD
