@@ -102,4 +102,52 @@ public class InMemoryPaymentsRepositoryTest
             act.Should().Throw<PaymentNotFoundException>()
                 .WithMessage($"Payment with ID {paymentId} not found.");
         }
+
+        [Fact]
+        public void Update_ShouldThrowPaymentNotFoundException_WhenPaymentNotFound()
+        {
+            Guid paymentId = Guid.NewGuid();
+            var payment = new PaymentBuilder()
+                .WithId(paymentId)
+                .WithStatus(PaymentStatus.Authorized)
+                .WithAmount(1000)
+                .WithCurrency("USD")
+                .WithPrecision(2)
+                .WithCardNumber("1234567812345678")
+                .WithCardExpiryMonth(12)
+                .WithCardExpiryYear(2025)
+                .WithCardCvv("123")
+                .Build();
+            Action act = () => _repository.Update(payment);
+
+            act.Should().Throw<PaymentNotFoundException>()
+                .WithMessage($"Payment with ID {paymentId} not found.");
+        }
+
+        [Fact]
+        public void Update_ShouldUpdatePayment_WhenPaymentIsFound()
+        {
+            Guid paymentId = Guid.NewGuid();
+            var payment = new PaymentBuilder()
+                .WithId(paymentId)
+                .WithStatus(PaymentStatus.Pending)
+                .WithAmount(1000)
+                .WithCurrency("USD")
+                .WithPrecision(2)
+                .WithCardNumber("1234567812345678")
+                .WithCardExpiryMonth(12)
+                .WithCardExpiryYear(2025)
+                .WithCardCvv("123")
+                .Build();
+            _repository.Add(payment);
+            payment.Status = PaymentStatus.Authorized;
+            
+            Action act = () => _repository.Update(payment);
+            
+            act.Should().NotThrow();
+            payment = _repository.GetById(paymentId);
+            payment.Should().NotBeNull();
+            payment.Id.Should().Be(paymentId);
+            payment.Status.Should().Be(PaymentStatus.Authorized);
+        }
 }
