@@ -4,6 +4,8 @@ namespace PaymentGateway.Api.Domain.Models.Requests;
 
 public class MakePaymentRequest
 {
+    private const string ValidCurrencies = "^(USD|EUR|GBP)$";
+
     [Required(ErrorMessage = "Card number is required")]
     [StringLength(19, MinimumLength = 14, ErrorMessage = "Card number must be between 14 and 19 digits")]
     [RegularExpression(@"^\d+$", ErrorMessage = "Card number must be numeric")]
@@ -18,7 +20,7 @@ public class MakePaymentRequest
     public int ExpiryYear { get; set; }
 
     [Required(ErrorMessage = "Currency is required")]
-    [RegularExpression(@"^(USD|EUR|GBP)$", ErrorMessage = "Currency must be one of the following: USD, EUR, GBP")]
+    [RegularExpression(ValidCurrencies, ErrorMessage = "Currency must be one of the following: USD, EUR, GBP")]
     public string Currency { get; set; }
 
     [Required(ErrorMessage = "Amount is required")]
@@ -29,8 +31,6 @@ public class MakePaymentRequest
     [StringLength(4, MinimumLength = 3, ErrorMessage = "CVV must be 3 or 4 digits")]
     [RegularExpression(@"^\d+$", ErrorMessage = "CVV must be numeric")]
     public string CVV { get; set; }
-
-    private static readonly List<string> ValidCurrencies = ["USD", "EUR", "GBP"];
     
     public bool IsValid()
     {
