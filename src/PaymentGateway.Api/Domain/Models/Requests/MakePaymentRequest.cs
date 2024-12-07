@@ -15,32 +15,32 @@ public class MakePaymentRequest
     {
         if (string.IsNullOrWhiteSpace(CardNumber) || CardNumber.Length < 14 || CardNumber.Length > 19 || !CardNumber.All(char.IsDigit))
         {
-            return false;
+            throw new ArgumentException("Invalid card number");
         }
 
         if (ExpiryMonth is < 1 or > 12)
         {
-            return false;
+            throw new ArgumentException("Invalid expiry month");
         }
 
         if (ExpiryYear < DateTime.Now.Year || (ExpiryYear == DateTime.Now.Year && ExpiryMonth < DateTime.Now.Month))
         {
-            return false;
+            throw new ArgumentException("Invalid expiry year");
         }
 
         if (string.IsNullOrWhiteSpace(Currency) || !ValidCurrencies.Contains(Currency))
         {
-            return false;
+            throw new ArgumentException("Invalid currency");
         }
 
         if (Amount <= 0)
         {
-            return false;
+            throw new ArgumentException("Invalid amount");
         }
 
         if (string.IsNullOrWhiteSpace(CVV) || (CVV.Length < 3 || CVV.Length > 4 || !CVV.All(char.IsDigit)))
         {
-            return false;
+            throw new ArgumentException("Invalid CVV");
         }
 
         return true;

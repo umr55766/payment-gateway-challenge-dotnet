@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+using PaymentGateway.Api.Domain.Exceptions;
 using PaymentGateway.Api.Domain.Models.Requests;
 using PaymentGateway.Api.Domain.Models.Responses;
-using PaymentGateway.Api.Domain.Repositories;
 using PaymentGateway.Api.Domain.Services;
 
 namespace PaymentGateway.Api.Controllers;
@@ -11,24 +11,36 @@ namespace PaymentGateway.Api.Controllers;
 [ApiController]
 public class PaymentsController : Controller
 {
-    private readonly InMemoryPaymentsRepository _inMemoryPaymentsRepository;
     private readonly PaymentService _paymentService;
 
-    public PaymentsController(InMemoryPaymentsRepository inMemoryPaymentsRepository, PaymentService paymentService)
+    public PaymentsController(PaymentService paymentService)
     {
-        _inMemoryPaymentsRepository = inMemoryPaymentsRepository;
         _paymentService = paymentService;
     }
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<GetPaymentResponse?>> GetPaymentAsync(Guid id)
     {
-        return await _paymentService.GetPaymentDetails(id);
+        try
+        {
+            return await _paymentService.GetPaymentDetails(id);
+        }
+        catch (PaymentNotFoundException exp)
+        {
+            return NotFound(exp.Message);
+        }
     }
 
     [HttpPost]
     public async Task<ActionResult<MakePaymentResponse?>> MakePaymentAsync(MakePaymentRequest request)
     {
-        return await _paymentService.MakePayment(request);
+        try
+        {
+            return await _paymentService.MakePayment(request);
+        }
+        catch (Exception exp)
+        {
+            return BadRequest(exp.Message);
+        } 
     }
 }

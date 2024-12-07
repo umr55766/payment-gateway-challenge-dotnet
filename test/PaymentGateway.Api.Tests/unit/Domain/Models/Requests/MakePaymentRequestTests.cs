@@ -2,7 +2,7 @@ using FluentAssertions;
 
 using PaymentGateway.Api.Domain.Models.Requests;
 
-namespace PaymentGateway.Api.Tests.Domain.Models.Requests;
+namespace PaymentGateway.Api.Tests.unit.Domain.Models.Requests;
 
 public class MakePaymentRequestTests
 {
@@ -19,7 +19,10 @@ public class MakePaymentRequestTests
             CVV = "123"
         };
 
-        request.IsValid().Should().BeFalse();
+        Action act = () => request.IsValid();
+        act.Should()
+           .Throw<ArgumentException>()
+           .WithMessage("Invalid card number");
     }
 
     [Fact]
@@ -35,7 +38,10 @@ public class MakePaymentRequestTests
             CVV = "123"
         };
 
-        request.IsValid().Should().BeFalse();
+        Action act = () => request.IsValid();
+        act.Should()
+           .Throw<ArgumentException>()
+           .WithMessage("Invalid expiry month");
     }
 
     [Fact]
@@ -51,7 +57,10 @@ public class MakePaymentRequestTests
             CVV = "123"
         };
 
-        request.IsValid().Should().BeFalse();
+        Action act = () => request.IsValid();
+        act.Should()
+           .Throw<ArgumentException>()
+           .WithMessage("Invalid expiry year");
     }
 
     [Fact]
@@ -67,7 +76,10 @@ public class MakePaymentRequestTests
             CVV = "123"
         };
 
-        request.IsValid().Should().BeFalse();
+        Action act = () => request.IsValid();
+        act.Should()
+           .Throw<ArgumentException>()
+           .WithMessage("Invalid currency");
     }
 
     [Fact]
@@ -83,7 +95,10 @@ public class MakePaymentRequestTests
             CVV = "123"
         };
 
-        request.IsValid().Should().BeFalse();
+        Action act = () => request.IsValid();
+        act.Should()
+           .Throw<ArgumentException>()
+           .WithMessage("Invalid amount");
     }
 
     [Fact]
@@ -99,7 +114,10 @@ public class MakePaymentRequestTests
             CVV = "12" // Invalid CVV
         };
 
-        request.IsValid().Should().BeFalse();
+        Action act = () => request.IsValid();
+        act.Should()
+           .Throw<ArgumentException>()
+           .WithMessage("Invalid CVV");
     }
 
     [Fact]

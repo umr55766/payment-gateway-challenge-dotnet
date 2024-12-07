@@ -4,7 +4,7 @@ using PaymentGateway.Api.Domain.Builders;
 using PaymentGateway.Api.Domain.Enums;
 using PaymentGateway.Api.Domain.Models.Requests;
 
-namespace PaymentGateway.Api.Tests.Domain.Builders;
+namespace PaymentGateway.Api.Tests.unit.Domain.Builders;
 
 public class PaymentBuilderTest
 {
@@ -97,6 +97,6 @@ public class PaymentBuilderTest
 
         var act = () => builder.FromRequest(request);
 
-        act.Should().Throw<InvalidOperationException>().WithMessage("Invalid MakePaymentRequest.");
+        act.Should().Throw<ArgumentException>().WithMessage("Invalid card number");
     }
 }

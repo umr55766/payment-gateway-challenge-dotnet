@@ -54,9 +54,4 @@ public class PaymentService
         _paymentRepository.Add(payment);
         return payment;
     }
-
-    public Payment ProcessPayment(Payment payment)
-    {
-        throw new NotImplementedException();
-    }
 }

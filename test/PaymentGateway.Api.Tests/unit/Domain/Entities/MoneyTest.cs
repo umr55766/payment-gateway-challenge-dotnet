@@ -1,6 +1,6 @@
 using PaymentGateway.Api.Domain.Entities;
 
-namespace PaymentGateway.Api.Tests.Domain.Entities;
+namespace PaymentGateway.Api.Tests.unit.Domain.Entities;
 
 public class MoneyTest
 {
