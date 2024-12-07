@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "7092:80"
+      - "5001:80"
     depends_on:
       - bank_simulator
 
@@ -21,3 +21,11 @@ services:
       - type: bind
         source: ./imposters
         target: /imposters
+
+  aspire_dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    container_name: aspire_dashboard
+    ports:
+      - "18888:18888"
+      - "4317:18889"
+    restart: always
