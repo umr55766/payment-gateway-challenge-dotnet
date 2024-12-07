@@ -31,7 +31,7 @@ Feel free to change the structure of the solution, use a different test library 
 - [ ] Currency validation
 - [X] Right value to store Money - Value, Currency ISO, Precision
 - [ ] Standardize the Errors
-- [ ] Get payment endpoint
+- [X] Get payment endpoint
 - [ ] Ensure thread safety
 - [X] Contract test - Swagger, Json
 - [ ] Integration test - Newman, Postman
