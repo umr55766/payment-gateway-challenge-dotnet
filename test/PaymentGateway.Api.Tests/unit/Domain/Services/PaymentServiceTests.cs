@@ -31,8 +31,9 @@ public class PaymentServiceTests
     [Fact]
     public void ShouldValidateDependencies()
     {
-        var act = () => new PaymentService(null, null);
-        act.Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(null, null))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(_paymentRepository, null))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(null, _bankClientMock.Object))).Should().Throw<ArgumentNullException>();
     }
 
     [Fact]
