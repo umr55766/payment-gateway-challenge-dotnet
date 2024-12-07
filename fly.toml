@@ -1,15 +1,15 @@
-# fly.toml app configuration file generated for payment-gateway-challenge-dotnet on 2024-12-07T08:21:47Z
+# fly.toml app configuration file generated for payment-gateway-challenge-dotnet-dark-surf-9016 on 2024-12-07T12:48:20+04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'payment-gateway-challenge-dotnet'
+app = 'payment-gateway-challenge-dotnet-dark-surf-9016'
 primary_region = 'lhr'
 
 [build]
 
 [http_service]
-  internal_port = 8080
+  internal_port = 80
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true

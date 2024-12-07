@@ -19,4 +19,7 @@ RUN dotnet publish "src/PaymentGateway.Api/PaymentGateway.Api.csproj" -c Release
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+ENV ASPNETCORE_URLS=http://0.0.0.0:80
+
 ENTRYPOINT ["dotnet", "PaymentGateway.Api.dll"]
