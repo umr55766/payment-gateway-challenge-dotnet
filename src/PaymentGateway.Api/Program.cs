@@ -1,3 +1,7 @@
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+
 using PaymentGateway.Api.Domain.HttpClients;
 using PaymentGateway.Api.Domain.Repositories;
 using PaymentGateway.Api.Domain.Services;
@@ -20,6 +24,36 @@ builder.Services.AddSingleton<IBankClient, BankHttpClient>();
 builder.Services.AddScoped<PaymentService>();
 
 builder.Services.Configure<BankClientSettings>(builder.Configuration.GetSection("BankClient"));
+
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeFormattedMessage = true;
+    logging.IncludeScopes = true;
+});
+var otel = builder.Services.AddOpenTelemetry();
+otel.WithMetrics(metrics =>
+{
+    // Metrics provider from OpenTelemetry
+    metrics.AddAspNetCoreInstrumentation();
+    
+    // Custom metrics
+    // metrics.AddMeter(greeterMeter.Name);
+
+    // ASP.NET Core specific metrics
+    metrics.AddMeter("Microsoft.AspNetCore.Hosting");
+    metrics.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
+});
+otel.WithTracing(tracing =>
+{
+    tracing.AddAspNetCoreInstrumentation();
+    tracing.AddHttpClientInstrumentation();
+    // tracing.AddSource(greeterActivitySource.Name);
+});
+var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+if (otlpEndpoint != null)
+{
+    otel.UseOtlpExporter();
+}
 
 
 var app = builder.Build();
