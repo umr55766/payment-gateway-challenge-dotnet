@@ -21,6 +21,7 @@ namespace PaymentGateway.Api.Tests.unit.Controllers;
 public class PaymentsControllerTests
 {
     private readonly HttpClient _client;
+    private readonly InMemoryPaymentsRepository _paymentsRepository;
     public PaymentsControllerTests()
     {
         var mockBankClient = new Mock<IBankClient>();
@@ -32,12 +33,12 @@ public class PaymentsControllerTests
                 AuthorizationCode = Guid.NewGuid().ToString()
             });
 
-        var paymentsRepository = new InMemoryPaymentsRepository();
+        _paymentsRepository = new InMemoryPaymentsRepository();
 
         var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
         _client = webApplicationFactory.WithWebHostBuilder(builder =>
                 builder.ConfigureServices(services => ((ServiceCollection)services)
-                    .AddSingleton(paymentsRepository)
+                    .AddSingleton(_paymentsRepository)
                     .AddSingleton(mockBankClient.Object)
                 ))
             .CreateClient();
@@ -75,16 +76,9 @@ public class PaymentsControllerTests
             .WithCardExpiryMonth(2)
             .WithCardExpiryYear(2025)
             .Build();
-        var paymentsRepository = new InMemoryPaymentsRepository();
-        paymentsRepository.Add(payment);
+        _paymentsRepository.Add(payment);
 
-        var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
-        var client = webApplicationFactory.WithWebHostBuilder(builder =>
-                builder.ConfigureServices(services => ((ServiceCollection)services)
-                    .AddSingleton(paymentsRepository)))
-            .CreateClient();
-
-        var response = await client.GetAsync($"/api/Payments/{payment.Id}");
+        var response = await _client.GetAsync($"/api/Payments/{payment.Id}");
         var paymentResponse = await response.Content.ReadFromJsonAsync<GetPaymentResponse>();
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
