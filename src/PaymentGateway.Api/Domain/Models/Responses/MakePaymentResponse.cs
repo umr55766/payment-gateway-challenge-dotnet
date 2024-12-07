@@ -5,7 +5,7 @@ namespace PaymentGateway.Api.Domain.Models.Responses;
 public class MakePaymentResponse
 {
     public string Id { get; set; }
-    public PaymentStatus Status { get; set; }
+    public string Status { get; set; }
     public string LastFourCardDigits { get; set; }
     public int ExpiryMonth { get; set; }
     public int ExpiryYear { get; set; }

@@ -40,7 +40,7 @@ public class PaymentMapper
         return new MakePaymentResponse
         {
             Id = payment.Id.ToString(),
-            Status = payment.Status,
+            Status = payment.Status.ToString(),
             LastFourCardDigits = payment.Card.LastFourDigits,
             ExpiryMonth = payment.Card.ExpiryMonth,
             ExpiryYear = payment.Card.ExpiryYear,

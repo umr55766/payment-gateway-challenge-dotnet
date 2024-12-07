@@ -42,7 +42,7 @@ public class PaymentServiceTests
 
         response.Should().NotBeNull();
         response.Id.Should().Be(response.Id);
-        response.Status.Should().Be(PaymentStatus.Authorized);
+        response.Status.Should().Be(PaymentStatus.Authorized.ToString());
         var storedPayment = _paymentRepository.GetById(Guid.Parse(response.Id));
         storedPayment.Should().NotBeNull();
         storedPayment.Status.Should().Be(PaymentStatus.Authorized);

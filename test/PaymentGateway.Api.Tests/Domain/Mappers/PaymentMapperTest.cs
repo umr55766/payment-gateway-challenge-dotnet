@@ -78,7 +78,7 @@ public class PaymentMapperTest
         Assert.Equal(payment.Id.ToString(), response.Id);
         Assert.Equal(payment.Money.Amount, response.Amount);
         Assert.Equal(payment.Money.Currency, response.Currency);
-        Assert.Equal(payment.Status, response.Status);
+        Assert.Equal(payment.Status.ToString(), response.Status);
     }
 
     [Fact]
@@ -100,6 +100,6 @@ public class PaymentMapperTest
         Assert.Equal(payment.Id.ToString(), response.Id);
         Assert.Equal(payment.Money.Amount, response.Amount);
         Assert.Equal(payment.Money.Currency, response.Currency);
-        Assert.Equal(payment.Status, response.Status);
+        Assert.Equal(payment.Status.ToString(), response.Status);
     }
 }
