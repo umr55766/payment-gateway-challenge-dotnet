@@ -3,7 +3,7 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'payment-gateway-challenge-dotnet-dark-surf-9016'
+app = 'payment-gateway-challenge-dotnet'
 primary_region = 'lhr'
 
 [build]
