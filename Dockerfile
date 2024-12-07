@@ -6,6 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 RUN ls -al
 COPY ["src/PaymentGateway.Api/PaymentGateway.Api.csproj", "/src/"]
+COPY ["test/PaymentGateway.Api.Tests/PaymentGateway.Api.Tests.csproj", "/src/test/"]
 RUN dotnet restore "/src/PaymentGateway.Api.csproj"
 COPY . ./src
 WORKDIR /src
