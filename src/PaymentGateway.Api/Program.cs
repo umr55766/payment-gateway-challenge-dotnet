@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
+
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -25,6 +28,14 @@ builder.Services.AddScoped<PaymentService>();
 
 builder.Services.Configure<BankClientSettings>(builder.Configuration.GetSection("BankClient"));
 
+var paymentMeter = new Meter("Payment", "1.0.0");
+var paymentAttempts = paymentMeter.CreateCounter<int>("payment.count", description: "Counts the number of payments");
+var makePaymentActivity = new ActivitySource("MakingPayment");
+builder.Services.AddSingleton(paymentMeter);
+builder.Services.AddSingleton(makePaymentActivity);
+builder.Services.AddSingleton(paymentAttempts);
+
+
 builder.Logging.AddOpenTelemetry(logging =>
 {
     logging.IncludeFormattedMessage = true;
@@ -37,7 +48,7 @@ otel.WithMetrics(metrics =>
     metrics.AddAspNetCoreInstrumentation();
     
     // Custom metrics
-    // metrics.AddMeter(greeterMeter.Name);
+    metrics.AddMeter(paymentMeter.Name);
 
     // ASP.NET Core specific metrics
     metrics.AddMeter("Microsoft.AspNetCore.Hosting");
@@ -47,14 +58,13 @@ otel.WithTracing(tracing =>
 {
     tracing.AddAspNetCoreInstrumentation();
     tracing.AddHttpClientInstrumentation();
-    // tracing.AddSource(greeterActivitySource.Name);
+    tracing.AddSource(makePaymentActivity.Name);
 });
 var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
 if (otlpEndpoint != null)
 {
     otel.UseOtlpExporter();
 }
-
 
 var app = builder.Build();
 

@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
+
 using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.HttpClients;
 using PaymentGateway.Api.Domain.Mappers;
@@ -11,11 +14,16 @@ public class PaymentService
 {
     private readonly InMemoryPaymentsRepository _paymentRepository;
     private readonly IBankClient _bankClient;
+    
+    private readonly ActivitySource _makePaymentActivitySource;
+    private readonly Counter<int> _paymentAttempts;
 
-    public PaymentService(InMemoryPaymentsRepository paymentRepository, IBankClient bankClient)
+    public PaymentService(InMemoryPaymentsRepository paymentRepository, IBankClient bankClient, ActivitySource makePaymentActivitySource, Counter<int> paymentAttempts)
     {
         _paymentRepository = paymentRepository ?? throw new ArgumentNullException(nameof(paymentRepository));
         _bankClient = bankClient ?? throw new ArgumentNullException(nameof(bankClient));
+        _makePaymentActivitySource = makePaymentActivitySource;
+        _paymentAttempts = paymentAttempts;
     }
 
     public async Task<MakePaymentResponse> MakePayment(MakePaymentRequest request)
@@ -50,6 +58,12 @@ public class PaymentService
     {
         var payment = PaymentMapper.MapToPayment(request);
         _paymentRepository.Add(payment);
+        
+        _paymentAttempts.Add(1);
+        using var makePaymentActivity = _makePaymentActivitySource.StartActivity("MakingPayment");
+        makePaymentActivity?.AddTag("currency", request.Currency);
+        makePaymentActivity?.AddTag("amount", request.Amount);
+        
         return payment;
     }
 }
