@@ -33,7 +33,7 @@ Feel free to change the structure of the solution, use a different test library 
 - [ ] Standardize the Errors
 - [ ] Get payment endpoint
 - [ ] Ensure thread safety
-- [ ] Contract test - Swagger, Json
+- [X] Contract test - Swagger, Json
 - [ ] Integration test - Newman, Postman
 - [ ] Load test - K6
 - [X] Dockerize the service
