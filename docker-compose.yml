@@ -1,6 +1,15 @@
 version: "3.8"
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - bank_simulator
+
   bank_simulator:
     container_name: bank_simulator
     image: bbyars/mountebank:2.8.1
@@ -12,4 +21,3 @@ services:
       - type: bind
         source: ./imposters
         target: /imposters
-      
