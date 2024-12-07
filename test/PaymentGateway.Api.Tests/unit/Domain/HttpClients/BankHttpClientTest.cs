@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Net.NetworkInformation;
 
 using FluentAssertions;
 
@@ -90,7 +91,7 @@ public class BankHttpClientTest
                 ItExpr.IsAny<HttpRequestMessage>(),
                 ItExpr.IsAny<CancellationToken>()
             )
-            .ThrowsAsync(new HttpRequestException("Network error"));
+            .ThrowsAsync(new NetworkInformationException(404));
         
         var request = new BankRequest
         {
@@ -102,7 +103,7 @@ public class BankHttpClientTest
         };
         var act = async () => await _bankHttpClient.MakePaymentAsync(request);
 
-        await act.Should().ThrowAsync<HttpRequestException>().WithMessage("Network error");
+        await act.Should().ThrowAsync<HttpRequestException>().WithMessage("Error communicating with the bank.");
         AssertBankIsCalled();
     }
 
