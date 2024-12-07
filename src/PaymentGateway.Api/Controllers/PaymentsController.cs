@@ -27,6 +27,7 @@ public class PaymentsController : Controller
         }
         catch (PaymentNotFoundException exp)
         {
+            // Push to NewRelic/Observability tool
             return NotFound(exp.Message);
         }
     }
@@ -40,6 +41,7 @@ public class PaymentsController : Controller
         }
         catch (Exception exp)
         {
+            // Push to NewRelic/Observability tool
             return BadRequest(exp.Message);
         } 
     }

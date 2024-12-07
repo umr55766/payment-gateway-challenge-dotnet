@@ -23,7 +23,8 @@ public class PaymentService
         Payment payment = InitiateAPayment(request);
         BankResponse bankResponse = await ProcessPaymentWithBank(payment);
         SaveResponseInDatabase(payment, bankResponse);
-
+        // Publish Event/Monitoring metrics
+        
         return PaymentMapper.MapToResponse(payment);
     }
 
