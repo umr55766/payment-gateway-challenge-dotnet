@@ -25,6 +25,9 @@ public class CardTest
     [InlineData("1234567812345678", 12, 2022, "123", "Expiry year must be in the future.")]
     [InlineData("1234567812345678", 12, 2025, "12", "CVV must be a numeric string with 3 or 4 digits.")]
     [InlineData("1234567812345678", 12, 2025, "12345", "CVV must be a numeric string with 3 or 4 digits.")]
+    [InlineData("1234567812345678", 12, 2025, "", "CVV must be a numeric string with 3 or 4 digits.")]
+    [InlineData("1234567812345678", 12, 2025, null, "CVV must be a numeric string with 3 or 4 digits.")]
+    [InlineData("1234567812345678", 12, 2025, "abc", "CVV must be a numeric string with 3 or 4 digits.")]
     public void Should_Throw_Exception_When_Creating_Card_With_Invalid_Data(
         string cardNumber, int expiryMonth, int expiryYear, string cvv, string expectedErrorMessage)
     {
