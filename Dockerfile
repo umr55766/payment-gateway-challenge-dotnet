@@ -4,7 +4,8 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["PaymentGateway.Api.csproj", "/src/"]
+RUN ls
+COPY ["/src/PaymentGateway.Api.csproj", "/src/"]
 RUN dotnet restore "/src/PaymentGateway.Api.csproj"
 COPY . ./src
 WORKDIR /src
