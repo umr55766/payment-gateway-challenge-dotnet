@@ -1,0 +1,1 @@
+npx newman run test/PaymentGateway.Api.Tests/smoke/CKO.postman_collection.json --insecure
