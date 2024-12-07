@@ -54,7 +54,7 @@ public class PaymentMapper
         var response = new GetPaymentResponse
         {
             Id = payment.Id,
-            Status = payment.Status,
+            Status = payment.Status.ToString(),
             CardNumberLastFour = payment.Card.LastFourDigits,
             ExpiryMonth = payment.Card.ExpiryMonth,
             ExpiryYear = payment.Card.ExpiryYear,
