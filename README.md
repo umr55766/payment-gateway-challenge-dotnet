@@ -34,7 +34,7 @@ Feel free to change the structure of the solution, use a different test library 
 - [X] Get payment endpoint
 - [ ] Ensure thread safety
 - [X] Contract test - Swagger, Json
-- [ ] Integration test - Newman, Postman
+- [X] Integration test - Newman, Postman
 - [ ] Load test - K6
 - [X] Dockerize the service
 - [ ] Script to build, execute app and run tests
