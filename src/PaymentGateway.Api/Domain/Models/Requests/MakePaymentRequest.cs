@@ -14,7 +14,7 @@ public class MakePaymentRequest
     public int ExpiryMonth { get; set; }
 
     [Required(ErrorMessage = "Expiry year is required")]
-    [Range(typeof(int), "1900", "3000", ErrorMessage = "Invalid expiry year")]
+    [Range(typeof(int), "2024", "3000", ErrorMessage = "Invalid expiry year")]
     public int ExpiryYear { get; set; }
 
     [Required(ErrorMessage = "Currency is required")]
@@ -22,7 +22,7 @@ public class MakePaymentRequest
     public string Currency { get; set; }
 
     [Required(ErrorMessage = "Amount is required")]
-    [Range(1, int.MaxValue, ErrorMessage = "Amount must be greater than 0")]
+    [Range(0, int.MaxValue, ErrorMessage = "Amount must be greater than 0")]
     public int Amount { get; set; }
 
     [Required(ErrorMessage = "CVV is required")]
