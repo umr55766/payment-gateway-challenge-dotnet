@@ -28,9 +28,9 @@ Feel free to change the structure of the solution, use a different test library 
 # TODO
 - [X] Make payment endpoint
 - [X] Make payment request validation
-- [ ] Currency validation
+- [X] Currency validation
 - [X] Right value to store Money - Value, Currency ISO, Precision
-- [ ] Standardize the Errors
+- [X] Standardize the Errors
 - [X] Get payment endpoint
 - [X] Ensure thread safety
 - [X] Contract test - Swagger, Json
