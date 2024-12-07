@@ -20,6 +20,29 @@ namespace PaymentGateway.Api.Tests.unit.Controllers;
 
 public class PaymentsControllerTests
 {
+    private readonly HttpClient _client;
+    public PaymentsControllerTests()
+    {
+        var mockBankClient = new Mock<IBankClient>();
+        mockBankClient
+            .Setup(client => client.MakePaymentAsync(It.IsAny<BankRequest>()))
+            .ReturnsAsync(new BankResponse()
+            {
+                Authorized = true,
+                AuthorizationCode = Guid.NewGuid().ToString()
+            });
+
+        var paymentsRepository = new InMemoryPaymentsRepository();
+
+        var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
+        _client = webApplicationFactory.WithWebHostBuilder(builder =>
+                builder.ConfigureServices(services => ((ServiceCollection)services)
+                    .AddSingleton(paymentsRepository)
+                    .AddSingleton(mockBankClient.Object)
+                ))
+            .CreateClient();
+    }
+    
     [Fact]
     public async Task ProcessAPaymentSuccessfully()
     {
@@ -42,7 +65,7 @@ public class PaymentsControllerTests
                     ))
             .CreateClient();
 
-        var response = await client.PostAsync($"/api/Payments", new StringContent(JsonSerializer.Serialize(new MakePaymentRequest
+        var response = await _client.PostAsync($"/api/Payments", new StringContent(JsonSerializer.Serialize(new MakePaymentRequest
         {
             Amount = 100,
             Currency = "USD",
