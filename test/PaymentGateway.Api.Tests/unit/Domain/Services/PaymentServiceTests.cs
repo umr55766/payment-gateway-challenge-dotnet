@@ -1,5 +1,7 @@
 using FluentAssertions;
 
+using Microsoft.Extensions.Logging.Abstractions;
+
 using Moq;
 
 using PaymentGateway.Api.Domain.Enums;
@@ -24,6 +26,13 @@ public class PaymentServiceTests
         _paymentRepository = new InMemoryPaymentsRepository();
         _bankClientMock = new Mock<IBankClient>();
         _paymentService = new PaymentService(_paymentRepository, _bankClientMock.Object);
+    }
+
+    [Fact]
+    public void ShouldValidateDependencies()
+    {
+        var act = () => new PaymentService(null, null);
+        act.Should().Throw<ArgumentNullException>();
     }
 
     [Fact]
