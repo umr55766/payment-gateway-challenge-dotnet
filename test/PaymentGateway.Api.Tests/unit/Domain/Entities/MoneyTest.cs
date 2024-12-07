@@ -31,7 +31,7 @@ public class MoneyTest
     [Fact]
     public void Should_Throw_Exception_When_Precision_Is_Invalid()
     {
-        Assert.Throws<ArgumentException>(() => new Money(1000, "US", 0));
-        Assert.Throws<ArgumentException>(() => new Money(1000, "US", -1));
+        Assert.Throws<ArgumentException>(() => new Money(1000, "USD", 0));
+        Assert.Throws<ArgumentException>(() => new Money(1000, "USD", -1));
     }
 }
