@@ -61,14 +61,23 @@ public class PaymentTest
             new Money(1000, "USD", 2),
             new Card("1234567812345678", 12, 2025, "123"));
 
-        var bankResponse = new BankResponse
-        {
-            Authorized = true,
-            AuthorizationCode = "12345678"
-        };
-        
+        var bankResponse = new BankResponse { Authorized = true };
         payment.PatchBankResponse(bankResponse);
-        
         payment.Status.Should().Be(PaymentStatus.Authorized);
+        
+    }
+
+    [Fact]
+    public void PatchBankResponse_ShouldUpdatePaymentWithFailureBankResponse()
+    {
+        var payment = new Payment(
+            Guid.NewGuid(),
+            PaymentStatus.Pending,
+            new Money(1000, "USD", 2),
+            new Card("1234567812345678", 12, 2025, "123"));
+
+        var bankResponse = new BankResponse { Authorized = false };
+        payment.PatchBankResponse(bankResponse);
+        payment.Status.Should().Be(PaymentStatus.Declined);
     }
 }
