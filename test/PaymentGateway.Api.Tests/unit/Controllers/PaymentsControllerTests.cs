@@ -88,11 +88,7 @@ public class PaymentsControllerTests
     [Fact]
     public async Task Returns404IfPaymentNotFound()
     {
-        var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
-        var client = webApplicationFactory.CreateClient();
-        
-        var response = await client.GetAsync($"/api/Payments/{Guid.NewGuid()}");
-        
+        var response = await _client.GetAsync($"/api/Payments/{Guid.NewGuid()}");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }
