@@ -97,6 +97,6 @@ public class PaymentBuilderTest
 
         var act = () => builder.FromRequest(request);
 
-        act.Should().Throw<ArgumentException>().WithMessage("Invalid card number");
+        act.Should().Throw<InvalidOperationException>().WithMessage("Invalid MakePaymentRequest.");
     }
 }

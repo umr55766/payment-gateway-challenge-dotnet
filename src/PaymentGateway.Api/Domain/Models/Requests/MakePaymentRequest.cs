@@ -34,36 +34,9 @@ public class MakePaymentRequest
     
     public bool IsValid()
     {
-        if (string.IsNullOrWhiteSpace(CardNumber) || CardNumber.Length < 14 || CardNumber.Length > 19 || !CardNumber.All(char.IsDigit))
-        {
-            throw new ArgumentException("Invalid card number");
-        }
-
-        if (ExpiryMonth is < 1 or > 12)
-        {
-            throw new ArgumentException("Invalid expiry month");
-        }
-
-        if (ExpiryYear < DateTime.Now.Year || (ExpiryYear == DateTime.Now.Year && ExpiryMonth < DateTime.Now.Month))
-        {
-            throw new ArgumentException("Invalid expiry year");
-        }
-
-        if (string.IsNullOrWhiteSpace(Currency) || !ValidCurrencies.Contains(Currency))
-        {
-            throw new ArgumentException("Invalid currency");
-        }
-
-        if (Amount <= 0)
-        {
-            throw new ArgumentException("Invalid amount");
-        }
-
-        if (string.IsNullOrWhiteSpace(CVV) || (CVV.Length < 3 || CVV.Length > 4 || !CVV.All(char.IsDigit)))
-        {
-            throw new ArgumentException("Invalid CVV");
-        }
-
-        return true;
+        var results = new List<ValidationResult>();
+        var context = new ValidationContext(this, serviceProvider: null, items: null);
+        Validator.TryValidateObject(this, context, results, validateAllProperties: true);
+        return results.Count == 0;
     }
 }

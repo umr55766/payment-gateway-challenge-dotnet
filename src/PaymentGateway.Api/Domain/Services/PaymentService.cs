@@ -47,9 +47,6 @@ public class PaymentService
 
     private Payment InitiateAPayment(MakePaymentRequest request)
     {
-        if (!request.IsValid())
-            throw new ArgumentException("Invalid payment request");
-
         var payment = PaymentMapper.MapToPayment(request);
         _paymentRepository.Add(payment);
         return payment;
