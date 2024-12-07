@@ -32,7 +32,7 @@ Feel free to change the structure of the solution, use a different test library 
 - [X] Right value to store Money - Value, Currency ISO, Precision
 - [ ] Standardize the Errors
 - [X] Get payment endpoint
-- [ ] Ensure thread safety
+- [X] Ensure thread safety
 - [X] Contract test - Swagger, Json
 - [X] Integration test - Newman, Postman
 - [ ] Load test - K6
