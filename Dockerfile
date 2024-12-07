@@ -4,16 +4,22 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-RUN ls -al
-COPY ["src/PaymentGateway.Api/PaymentGateway.Api.csproj", "/src/"]
-COPY ["test/PaymentGateway.Api.Tests/PaymentGateway.Api.Tests.csproj", "/src/test/"]
-RUN dotnet restore "/src/PaymentGateway.Api.csproj"
-COPY . ./src
+
+# Copy all project files
+COPY ["src/PaymentGateway.Api/PaymentGateway.Api.csproj", "src/PaymentGateway.Api/"]
+COPY ["test/PaymentGateway.Api.Tests/PaymentGateway.Api.Tests.csproj", "test/PaymentGateway.Api.Tests/"]
+RUN dotnet restore "src/PaymentGateway.Api/PaymentGateway.Api.csproj"
+
+# Copy the remaining source and test files
+COPY . .
+RUN dotnet build "src/PaymentGateway.Api/PaymentGateway.Api.csproj" -c Release -o /app/build
+
+FROM build AS test
 WORKDIR /src
-RUN dotnet build "PaymentGateway.Api.csproj" -c Release -o /app/build
+RUN dotnet test "test/PaymentGateway.Api.Tests/PaymentGateway.Api.Tests.csproj" --no-build --collect:"XPlat Code Coverage"
 
 FROM build AS publish
-RUN dotnet publish "PaymentGateway.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "src/PaymentGateway.Api/PaymentGateway.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
