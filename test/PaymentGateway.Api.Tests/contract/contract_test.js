@@ -6,7 +6,7 @@ const fs = require("fs");
 const http = require("http");
 
 // URLs and file paths
-const url = "http://localhost:5067/swagger/v1/swagger.json";
+const url = "http://localhost:5001/swagger/v1/swagger.json";
 const expectedFilePath = "expected_contract.json";
 
 // Helper to sort JSON keys

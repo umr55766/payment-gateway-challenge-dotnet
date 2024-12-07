@@ -31,7 +31,6 @@
 							"",
 							"var jsonData = pm.response.json();",
 							"pm.environment.set(\"PAYMENT_ID\", jsonData.id);",
-							"console.log(pm.environment.get(\"PAYMENT_ID\"))",
 							""
 						],
 						"type": "text/javascript",
@@ -52,12 +51,12 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7092/api/payments",
-					"protocol": "https",
+					"raw": "http://localhost:5001/api/payments",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7092",
+					"port": "5001",
 					"path": [
 						"api",
 						"payments"
@@ -98,12 +97,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7092/api/payments/{{PAYMENT_ID}}",
-					"protocol": "https",
+					"raw": "http://localhost:5001/api/payments/{{PAYMENT_ID}}",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7092",
+					"port": "5001",
 					"path": [
 						"api",
 						"payments",
@@ -158,12 +157,12 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7092/api/payments",
-					"protocol": "https",
+					"raw": "http://localhost:5001/api/payments",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7092",
+					"port": "5001",
 					"path": [
 						"api",
 						"payments"
@@ -204,12 +203,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7092/api/payments/{{PAYMENT_ID}}",
-					"protocol": "https",
+					"raw": "http://localhost:5001/api/payments/{{PAYMENT_ID}}",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "7092",
+					"port": "5001",
 					"path": [
 						"api",
 						"payments",
