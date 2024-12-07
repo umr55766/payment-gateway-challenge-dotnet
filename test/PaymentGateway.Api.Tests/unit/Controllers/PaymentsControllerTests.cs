@@ -47,17 +47,17 @@ public class PaymentsControllerTests
         Assert.NotNull(paymentResponse);
     }
 
-    // [Fact]
-    // public async Task Returns404IfPaymentNotFound()
-    // {
-    //     // Arrange
-    //     var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
-    //     var client = webApplicationFactory.CreateClient();
-    //     
-    //     // Act
-    //     var response = await client.GetAsync($"/api/Payments/{Guid.NewGuid()}");
-    //     
-    //     // Assert
-    //     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    // }
+    [Fact]
+    public async Task Returns404IfPaymentNotFound()
+    {
+        // Arrange
+        var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
+        var client = webApplicationFactory.CreateClient();
+        
+        // Act
+        var response = await client.GetAsync($"/api/Payments/{Guid.NewGuid()}");
+        
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }
