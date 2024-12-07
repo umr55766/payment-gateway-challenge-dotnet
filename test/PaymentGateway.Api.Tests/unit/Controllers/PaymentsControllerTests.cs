@@ -24,10 +24,11 @@ public class PaymentsControllerTests
 {
     private readonly HttpClient _client;
     private readonly InMemoryPaymentsRepository _paymentsRepository;
+    private readonly Mock<IBankClient> _mockBankClient;
     public PaymentsControllerTests()
     {
-        var mockBankClient = new Mock<IBankClient>();
-        mockBankClient
+        _mockBankClient = new Mock<IBankClient>();
+        _mockBankClient
             .Setup(client => client.MakePaymentAsync(It.IsAny<BankRequest>()))
             .ReturnsAsync(new BankResponse()
             {
@@ -41,7 +42,7 @@ public class PaymentsControllerTests
         _client = webApplicationFactory.WithWebHostBuilder(builder =>
                 builder.ConfigureServices(services => ((ServiceCollection)services)
                     .AddSingleton(_paymentsRepository)
-                    .AddSingleton(mockBankClient.Object)
+                    .AddSingleton(_mockBankClient.Object)
                 ))
             .CreateClient();
     }
@@ -65,7 +66,7 @@ public class PaymentsControllerTests
     }
     
     [Fact]
-    public async Task ProcessAPaymentWithException()
+    public async Task ProcessAPaymentWithInvalidPayload()
     {
         var response = await _client.PostAsync($"/api/Payments", new StringContent(JsonSerializer.Serialize(new MakePaymentRequest()), Encoding.UTF8, "application/json"));
         
@@ -75,7 +76,23 @@ public class PaymentsControllerTests
         response.Content.ReadAsStringAsync().Result.Contains("Card number is required").Should().BeTrue();
         response.Content.ReadAsStringAsync().Result.Contains("Invalid expiry year").Should().BeTrue();
         response.Content.ReadAsStringAsync().Result.Contains("Expiry month must be between 1 and 12").Should().BeTrue();
+    }
+    
+    [Fact]
+    public async Task ProcessAPaymentWithException()
+    {
+        _mockBankClient.Setup(client => client.MakePaymentAsync(It.IsAny<BankRequest>())).ThrowsAsync(new Exception());
+        var response = await _client.PostAsync($"/api/Payments", new StringContent(JsonSerializer.Serialize(new MakePaymentRequest
+        {
+            Amount = 100,
+            Currency = "USD",
+            CardNumber = "123451234512345",
+            CVV = "123",
+            ExpiryMonth = 2,
+            ExpiryYear = 2025,
+        }), Encoding.UTF8, "application/json"));
         
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
     
     [Fact]
