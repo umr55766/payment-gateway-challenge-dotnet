@@ -23,7 +23,13 @@ public class Card
             throw new ArgumentException("Expiry year must be in the future.");
         ExpiryYear = expiryYear;
 
-        if (string.IsNullOrEmpty(cvv) || !cvv.All(char.IsDigit) || (cvv.Length != 3 && cvv.Length != 4))
+        if (string.IsNullOrEmpty(cvv))
+            throw new ArgumentException("CVV must be a numeric string with 3 or 4 digits.");
+
+        if (!cvv.All(char.IsDigit))
+            throw new ArgumentException("CVV must be a numeric string with 3 or 4 digits.");
+
+        if ((cvv.Length != 3 && cvv.Length != 4))
             throw new ArgumentException("CVV must be a numeric string with 3 or 4 digits.");
         Cvv = cvv;
     }
