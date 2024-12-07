@@ -46,25 +46,6 @@ public class PaymentsControllerTests
     [Fact]
     public async Task ProcessAPaymentSuccessfully()
     {
-        var mockBankClient = new Mock<IBankClient>();
-        mockBankClient
-            .Setup(client => client.MakePaymentAsync(It.IsAny<BankRequest>()))
-            .ReturnsAsync(new BankResponse()
-            {
-                Authorized = true,
-                AuthorizationCode = Guid.NewGuid().ToString()
-            });
-
-        var paymentsRepository = new InMemoryPaymentsRepository();
-
-        var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
-        var client = webApplicationFactory.WithWebHostBuilder(builder =>
-                builder.ConfigureServices(services => ((ServiceCollection)services)
-                    .AddSingleton(paymentsRepository)
-                    .AddSingleton(mockBankClient.Object)
-                    ))
-            .CreateClient();
-
         var response = await _client.PostAsync($"/api/Payments", new StringContent(JsonSerializer.Serialize(new MakePaymentRequest
         {
             Amount = 100,
