@@ -3,6 +3,8 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
+using FluentAssertions;
+
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -60,6 +62,20 @@ public class PaymentsControllerTests
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(paymentResponse);
+    }
+    
+    [Fact]
+    public async Task ProcessAPaymentWithException()
+    {
+        var response = await _client.PostAsync($"/api/Payments", new StringContent(JsonSerializer.Serialize(new MakePaymentRequest()), Encoding.UTF8, "application/json"));
+        
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.Content.ReadAsStringAsync().Result.Contains("CVV is required").Should().BeTrue();
+        response.Content.ReadAsStringAsync().Result.Contains("Currency is required").Should().BeTrue();
+        response.Content.ReadAsStringAsync().Result.Contains("Card number is required").Should().BeTrue();
+        response.Content.ReadAsStringAsync().Result.Contains("Invalid expiry year").Should().BeTrue();
+        response.Content.ReadAsStringAsync().Result.Contains("Expiry month must be between 1 and 12").Should().BeTrue();
+        
     }
     
     [Fact]
