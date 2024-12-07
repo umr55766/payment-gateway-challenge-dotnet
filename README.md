@@ -29,7 +29,7 @@ Feel free to change the structure of the solution, use a different test library 
 - [X] Make payment endpoint
 - [X] Make payment request validation
 - [ ] Currency validation
-- [ ] Right value to store Money - Value, Currency ISO, Precision
+- [X] Right value to store Money - Value, Currency ISO, Precision
 - [ ] Standardize the Errors
 - [ ] Get payment endpoint
 - [ ] Ensure thread safety
