@@ -11,7 +11,7 @@ COPY ["test/PaymentGateway.Api.Tests/PaymentGateway.Api.Tests.csproj", "test/Pay
 RUN dotnet restore "src/PaymentGateway.Api/PaymentGateway.Api.csproj"
 
 # Copy the remaining source and test files
-COPY . .
+COPY src src
 RUN dotnet build "src/PaymentGateway.Api/PaymentGateway.Api.csproj" -c Release -o /app/build
 
 FROM build AS test
