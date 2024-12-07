@@ -1,4 +1,4 @@
-using FluentAssertions;
+using System.ComponentModel.DataAnnotations;
 
 using PaymentGateway.Api.Domain.Models.Requests;
 
@@ -6,133 +6,86 @@ namespace PaymentGateway.Api.Tests.unit.Domain.Models.Requests;
 
 public class MakePaymentRequestTests
 {
-    [Fact]
-    public void ShouldReturnFalseWhenCardNumberIsInvalid()
+    private IList<ValidationResult> ValidateModel(object model)
     {
-        var request = new MakePaymentRequest
+        var results = new List<ValidationResult>();
+        var context = new ValidationContext(model, serviceProvider: null, items: null);
+        Validator.TryValidateObject(model, context, results, validateAllProperties: true);
+        return results;
+    }
+
+    private MakePaymentRequest CreateValidRequest()
+    {
+        return new MakePaymentRequest
         {
-            CardNumber = "12345",
+            CardNumber = "1234567890123456",
             ExpiryMonth = 12,
-            ExpiryYear = 2025,
+            ExpiryYear = DateTime.Now.Year + 1,
             Currency = "USD",
-            Amount = 1000,
+            Amount = 100,
             CVV = "123"
         };
-
-        Action act = () => request.IsValid();
-        act.Should()
-           .Throw<ArgumentException>()
-           .WithMessage("Invalid card number");
     }
 
     [Fact]
-    public void ShouldReturnFalseWhenExpiryMonthIsInvalid()
+    public void ShouldFailValidation_ForInvalidCardNumber()
     {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "1234567812345678",
-            ExpiryMonth = 15, // Invalid month
-            ExpiryYear = 2025,
-            Currency = "USD",
-            Amount = 1000,
-            CVV = "123"
-        };
-
-        Action act = () => request.IsValid();
-        act.Should()
-           .Throw<ArgumentException>()
-           .WithMessage("Invalid expiry month");
+        var request = CreateValidRequest();
+        request.CardNumber = "123";
+        var validationResults = ValidateModel(request);
+        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Card number must be between 14 and 19 digits"));
     }
 
     [Fact]
-    public void ShouldReturnFalseWhenExpiryYearIsInThePast()
+    public void ShouldFailValidation_ForInvalidExpiryMonth()
     {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "1234567812345678",
-            ExpiryMonth = 12,
-            ExpiryYear = 2020, // Expired year
-            Currency = "USD",
-            Amount = 1000,
-            CVV = "123"
-        };
-
-        Action act = () => request.IsValid();
-        act.Should()
-           .Throw<ArgumentException>()
-           .WithMessage("Invalid expiry year");
+        var request = CreateValidRequest();
+        request.ExpiryMonth = 13;
+        var validationResults = ValidateModel(request);
+        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Expiry month must be between 1 and 12"));
     }
 
     [Fact]
-    public void ShouldReturnFalseWhenCurrencyIsInvalid()
+    public void ShouldFailValidation_ForInvalidExpiryYear()
     {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "1234567812345678",
-            ExpiryMonth = 12,
-            ExpiryYear = 2025,
-            Currency = "INR", // Invalid currency
-            Amount = 1000,
-            CVV = "123"
-        };
-
-        Action act = () => request.IsValid();
-        act.Should()
-           .Throw<ArgumentException>()
-           .WithMessage("Invalid currency");
+        var request = CreateValidRequest();
+        request.ExpiryYear = DateTime.Now.Year - 1;
+        var validationResults = ValidateModel(request);
+        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Invalid expiry year"));
     }
 
     [Fact]
-    public void ShouldReturnFalseWhenAmountIsInvalid()
+    public void ShouldFailValidation_ForInvalidCurrency()
     {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "1234567812345678",
-            ExpiryMonth = 12,
-            ExpiryYear = 2025,
-            Currency = "USD",
-            Amount = 0, // Invalid amount
-            CVV = "123"
-        };
-
-        Action act = () => request.IsValid();
-        act.Should()
-           .Throw<ArgumentException>()
-           .WithMessage("Invalid amount");
+        var request = CreateValidRequest();
+        request.Currency = "INR";
+        var validationResults = ValidateModel(request);
+        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Currency must be one of the following"));
     }
 
     [Fact]
-    public void ShouldReturnFalseWhenCVVIsInvalid()
+    public void ShouldFailValidation_ForInvalidAmount()
     {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "1234567812345678",
-            ExpiryMonth = 12,
-            ExpiryYear = 2025,
-            Currency = "USD",
-            Amount = 1000,
-            CVV = "12" // Invalid CVV
-        };
-
-        Action act = () => request.IsValid();
-        act.Should()
-           .Throw<ArgumentException>()
-           .WithMessage("Invalid CVV");
+        var request = CreateValidRequest();
+        request.Amount = -10;
+        var validationResults = ValidateModel(request);
+        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Amount must be greater than 0"));
     }
 
     [Fact]
-    public void ShouldReturnTrueWhenRequestIsValid()
+    public void ShouldFailValidation_ForInvalidCVV()
     {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "1234567812345678",
-            ExpiryMonth = 12,
-            ExpiryYear = 2025,
-            Currency = "USD",
-            Amount = 1000,
-            CVV = "123"
-        };
+        var request = CreateValidRequest();
+        request.CVV = "12";
+        var validationResults = ValidateModel(request);
+        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("CVV must be 3 or 4 digits"));
+    }
 
-        request.IsValid().Should().BeTrue();
+    [Fact]
+    public void ShouldPassValidation_ForValidRequest()
+    {
+        var request = CreateValidRequest();
+        var validationResults = ValidateModel(request);
+        Assert.Empty(validationResults);
     }
 }
