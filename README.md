@@ -36,7 +36,7 @@ Feel free to change the structure of the solution, use a different test library 
 - [ ] Contract test - Swagger, Json
 - [ ] Integration test - Newman, Postman
 - [ ] Load test - K6
-- [ ] Dockerize the service
+- [X] Dockerize the service
 - [ ] Script to build, execute app and run tests
 - [X] Create Github repo with CI
-- [ ] Add CD
+- [X] Add CD
