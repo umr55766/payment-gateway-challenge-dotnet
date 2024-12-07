@@ -22,12 +22,15 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       
-      - name: Build
-        run: dotnet build --no-restore --configuration Release
+      - name: Build for test
+        run: dotnet build --no-restore
       
       - name: Test with coverage
         run: |
           dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+
+      - name: Build for release
+        run: dotnet build --no-restore --configuration Release
       
       - name: Publish Code Coverage Report
         uses: codecov/codecov-action@v5
