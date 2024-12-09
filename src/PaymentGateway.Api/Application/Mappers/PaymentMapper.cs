@@ -19,7 +19,7 @@ public static class PaymentMapper
             .WithId(Guid.NewGuid())
             .WithAmount(request.Amount)
             .WithCurrency(request.Currency)
-            .WithPrecision(2) // Assuming default precision
+            .WithPrecision(2) // Assuming default precision - Ideally should be based on Currency
             .WithCardNumber(request.CardNumber)
             .WithCardExpiryMonth(request.ExpiryMonth)
             .WithCardExpiryYear(request.ExpiryYear)
