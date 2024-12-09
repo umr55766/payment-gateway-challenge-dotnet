@@ -5,14 +5,14 @@ using PaymentGateway.Api.Domain.Enums;
 using PaymentGateway.Api.Domain.Exceptions;
 using PaymentGateway.Api.Domain.Repositories;
 
-namespace PaymentGateway.Api.Tests.Domain.Repositories;
+namespace PaymentGateway.Api.Tests.unit.Domain.Repositories;
 
 public class InMemoryPaymentsRepositoryTest
 {
     private readonly InMemoryPaymentsRepository _repository = new();
 
     [Fact]
-    public void Add_ShouldAddPaymentToRepository()
+    public async Task Add_ShouldAddPaymentToRepository()
     {
         Guid paymentId = Guid.NewGuid();
         var payment = new PaymentBuilder()
@@ -27,8 +27,8 @@ public class InMemoryPaymentsRepositoryTest
             .WithCardCvv("123")
             .Build();
 
-        _repository.Add(payment);
-        var storedPayment = _repository.GetById(paymentId);
+        await _repository.Add(payment);
+        var storedPayment = await _repository.GetById(paymentId);
 
         storedPayment.Should().NotBeNull();
         storedPayment.Id.Should().Be(paymentId);
@@ -36,7 +36,7 @@ public class InMemoryPaymentsRepositoryTest
     }
 
     [Fact]
-    public void Add_ShouldThrowPaymentAlreadyExistsException_WhenPaymentAlreadyExists()
+    public async Task Add_ShouldThrowPaymentAlreadyExistsException_WhenPaymentAlreadyExists()
     {
         Guid paymentId = Guid.NewGuid();
         var payment1 = new PaymentBuilder()
@@ -62,16 +62,16 @@ public class InMemoryPaymentsRepositoryTest
             .WithCardExpiryYear(2026)
             .WithCardCvv("456")
             .Build();
-        _repository.Add(payment1);
+        await _repository.Add(payment1);
 
-        Action act = () => _repository.Add(payment2);
+        Func<Task> act = async () => await _repository.Add(payment2);
 
-        act.Should().Throw<PaymentAlreadyExistsException>()
+        await act.Should().ThrowAsync<PaymentAlreadyExistsException>()
             .WithMessage($"Payment with ID {paymentId} already exists.");
     }
 
     [Fact]
-    public void GetById_ShouldReturnCorrectPayment()
+    public async Task GetById_ShouldReturnCorrectPayment()
     {
         Guid paymentId = Guid.NewGuid();
         var payment = new PaymentBuilder()
@@ -87,7 +87,7 @@ public class InMemoryPaymentsRepositoryTest
             .Build();
         _repository.Add(payment);
 
-        var retrievedPayment = _repository.GetById(paymentId);
+        var retrievedPayment = await _repository.GetById(paymentId);
 
         retrievedPayment.Should().NotBeNull();
         retrievedPayment.Id.Should().Be(paymentId);
@@ -118,14 +118,14 @@ public class InMemoryPaymentsRepositoryTest
             .WithCardExpiryYear(2025)
             .WithCardCvv("123")
             .Build();
-        Action act = () => _repository.Update(payment);
+        Func<Task> act = () => _repository.Update(payment);
 
-        act.Should().Throw<PaymentNotFoundException>()
+        act.Should().ThrowAsync<PaymentNotFoundException>()
             .WithMessage($"Payment with ID {paymentId} not found.");
     }
 
     [Fact]
-    public void Update_ShouldUpdatePayment_WhenPaymentIsFound()
+    public async Task Update_ShouldUpdatePayment_WhenPaymentIsFound()
     {
         Guid paymentId = Guid.NewGuid();
         var payment = new PaymentBuilder()
@@ -139,13 +139,13 @@ public class InMemoryPaymentsRepositoryTest
             .WithCardExpiryYear(2025)
             .WithCardCvv("123")
             .Build();
-        _repository.Add(payment);
+        await _repository.Add(payment);
         payment.MarkAsAuthorized();
         
-        Action act = () => _repository.Update(payment);
+        Func<Task> act = async () => await _repository.Update(payment);
         
-        act.Should().NotThrow();
-        payment = _repository.GetById(paymentId);
+        await act.Should().NotThrowAsync();
+        payment = await _repository.GetById(paymentId);
         payment.Should().NotBeNull();
         payment.Id.Should().Be(paymentId);
         payment.Status.Should().Be(PaymentStatus.Authorized);

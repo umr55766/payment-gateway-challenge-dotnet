@@ -1,6 +1,7 @@
-using FluentAssertions;
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
-using Microsoft.Extensions.Logging.Abstractions;
+using FluentAssertions;
 
 using Moq;
 
@@ -13,27 +14,31 @@ using PaymentGateway.Api.Domain.Models.Responses;
 using PaymentGateway.Api.Domain.Repositories;
 using PaymentGateway.Api.Domain.Services;
 
-namespace PaymentGateway.Api.Tests.Domain.Services;
+namespace PaymentGateway.Api.Tests.unit.Domain.Services;
 
 public class PaymentServiceTests
 {
     private readonly InMemoryPaymentsRepository _paymentRepository;
     private readonly Mock<IBankClient> _bankClientMock;
     private readonly PaymentService _paymentService;
+    private readonly ActivitySource _activitySource = new("PaymentServiceTests");
+    private readonly Counter<int> _counter;
 
     public PaymentServiceTests()
     {
         _paymentRepository = new InMemoryPaymentsRepository();
         _bankClientMock = new Mock<IBankClient>();
-        _paymentService = new PaymentService(_paymentRepository, _bankClientMock.Object);
+        var meter = new Meter("Payment", "1.0.0");
+        _counter = meter.CreateCounter<int>("payment.count", description: "Counts the number of payments");
+        _paymentService = new PaymentService(_paymentRepository, _bankClientMock.Object, _activitySource, _counter);
     }
 
     [Fact]
     public void ShouldValidateDependencies()
     {
-        ((Func<PaymentService>?)(() => new PaymentService(null, null))).Should().Throw<ArgumentNullException>();
-        ((Func<PaymentService>?)(() => new PaymentService(_paymentRepository, null))).Should().Throw<ArgumentNullException>();
-        ((Func<PaymentService>?)(() => new PaymentService(null, _bankClientMock.Object))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(null, null, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(_paymentRepository, null, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(null, _bankClientMock.Object, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
     }
 
     [Fact]
@@ -53,7 +58,7 @@ public class PaymentServiceTests
         response.Should().NotBeNull();
         response.Id.Should().Be(response.Id);
         response.Status.Should().Be(PaymentStatus.Authorized.ToString());
-        var storedPayment = _paymentRepository.GetById(Guid.Parse(response.Id));
+        var storedPayment = await _paymentRepository.GetById(Guid.Parse(response.Id));
         storedPayment.Should().NotBeNull();
         storedPayment.Status.Should().Be(PaymentStatus.Authorized);
         _bankClientMock.Verify(client => client.MakePaymentAsync(It.IsAny<BankRequest>()), Times.Once);
@@ -77,7 +82,7 @@ public class PaymentServiceTests
 
         await Assert.ThrowsAsync<HttpRequestException>(() => _paymentService.MakePayment(request));
 
-        Assert.Throws<PaymentNotFoundException>(() => _paymentRepository.GetById(payment.Id));
+        await Assert.ThrowsAsync<PaymentNotFoundException>(async () => await _paymentRepository.GetById(payment.Id));
         _bankClientMock.Verify(client => client.MakePaymentAsync(It.IsAny<BankRequest>()), Times.Once);
     }
 

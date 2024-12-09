@@ -30,7 +30,7 @@ public class PaymentService
     {
         Payment payment = InitiateAPayment(request);
         BankResponse bankResponse = await ProcessPaymentWithBank(payment);
-        SaveResponseInDatabase(payment, bankResponse);
+        await SaveResponseInDatabase(payment, bankResponse);
         // Publish Event/Monitoring metrics
         
         return PaymentMapper.MapToResponse(payment);
@@ -38,13 +38,13 @@ public class PaymentService
 
     public async Task<GetPaymentResponse> GetPaymentDetails(Guid id)
     {
-        return PaymentMapper.MapToGetPaymentResponse(_paymentRepository.GetById(id));
+        return PaymentMapper.MapToGetPaymentResponse(await _paymentRepository.GetById(id));
     }
 
-    private void SaveResponseInDatabase(Payment payment, BankResponse bankResponse)
+    private async Task SaveResponseInDatabase(Payment payment, BankResponse bankResponse)
     {
         payment.PatchBankResponse(bankResponse);
-        _paymentRepository.Update(payment);
+        await _paymentRepository.Update(payment);
     }
 
     private async Task<BankResponse> ProcessPaymentWithBank(Payment payment)

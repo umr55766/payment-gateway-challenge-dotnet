@@ -5,29 +5,31 @@ using PaymentGateway.Api.Domain.Exceptions;
 
 namespace PaymentGateway.Api.Domain.Repositories;
 
-public class InMemoryPaymentsRepository
+public class InMemoryPaymentsRepository : IPaymentRepository
 {
     private readonly ConcurrentDictionary<Guid, Payment> _payments = new();
 
-    public void Add(Payment payment)
+    public Task Add(Payment payment)
     {
         if (!_payments.TryAdd(payment.Id, payment))
         {
             throw new PaymentAlreadyExistsException(payment.Id);
         }
+        
+        return Task.CompletedTask;
     }
 
-    public Payment GetById(Guid id)
+    public Task<Payment> GetById(Guid id)
     {
         if (!_payments.TryGetValue(id, out var payment))
         {
             throw new PaymentNotFoundException(id);
         }
 
-        return payment;
+        return Task.FromResult(payment);
     }
     
-    public void Update(Payment payment)
+    public Task Update(Payment payment)
     {
         if (!_payments.TryGetValue(payment.Id, out var _))
         {
@@ -35,5 +37,6 @@ public class InMemoryPaymentsRepository
         }
         
         _payments[payment.Id] = payment;
+        return Task.CompletedTask;
     }
 }
