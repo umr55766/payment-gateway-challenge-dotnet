@@ -9,21 +9,14 @@ namespace PaymentGateway.Api.Interfaces.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PaymentsController : Controller
+public class PaymentsController(PaymentService paymentService) : Controller
 {
-    private readonly PaymentService _paymentService;
-
-    public PaymentsController(PaymentService paymentService)
-    {
-        _paymentService = paymentService;
-    }
-
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<GetPaymentResponse?>> GetPaymentAsync(Guid id)
     {
         try
         {
-            return await _paymentService.GetPaymentDetails(id);
+            return await paymentService.GetPaymentDetails(id);
         }
         catch (PaymentNotFoundException exp)
         {
@@ -37,7 +30,7 @@ public class PaymentsController : Controller
     {
         try
         {
-            return await _paymentService.MakePayment(request);
+            return await paymentService.MakePayment(request);
         }
         catch (Exception exp)
         {

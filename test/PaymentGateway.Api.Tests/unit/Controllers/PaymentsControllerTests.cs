@@ -59,7 +59,7 @@ public class PaymentsControllerTests
             ExpiryMonth = 2,
             ExpiryYear = 2025,
         }), Encoding.UTF8, "application/json"));
-        var paymentResponse = await response.Content.ReadFromJsonAsync<GetPaymentResponse>();
+        var paymentResponse = await response.Content.ReadFromJsonAsync<MakePaymentResponse>();
         
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(paymentResponse);

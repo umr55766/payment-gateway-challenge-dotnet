@@ -2,7 +2,7 @@ namespace PaymentGateway.Api.Infrastructure.Settings
 {
     public class BankClientSettings
     {
-        public string BaseUrl { get; set; }
-        public int TimeoutInSeconds { get; set; }
+        public required string BaseUrl { get; init; }
+        public int TimeoutInSeconds { get; init; }
     }
 }

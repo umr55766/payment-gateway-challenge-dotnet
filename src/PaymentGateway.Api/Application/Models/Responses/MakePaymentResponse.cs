@@ -2,11 +2,11 @@
 
 public class MakePaymentResponse
 {
-    public string Id { get; set; }
-    public string Status { get; set; }
-    public string LastFourCardDigits { get; set; }
+    public required string Id { get; init; }
+    public required string Status { get; init; }
+    public required string LastFourCardDigits { get; set; }
     public int ExpiryMonth { get; set; }
     public int ExpiryYear { get; set; }
-    public string Currency { get; set; }
-    public int Amount { get; set; }
+    public required string Currency { get; init; }
+    public int Amount { get; init; }
 }
