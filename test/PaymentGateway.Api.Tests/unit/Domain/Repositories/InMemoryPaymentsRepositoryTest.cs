@@ -85,7 +85,7 @@ public class InMemoryPaymentsRepositoryTest
             .WithCardExpiryYear(2025)
             .WithCardCvv("123")
             .Build();
-        _repository.Add(payment);
+        await _repository.Add(payment);
 
         var retrievedPayment = await _repository.GetById(paymentId);
 
@@ -97,9 +97,9 @@ public class InMemoryPaymentsRepositoryTest
     public void GetById_ShouldThrowPaymentNotFoundException_WhenPaymentNotFound()
     {
         Guid paymentId = Guid.NewGuid();
-        Action act = () => _repository.GetById(paymentId);
+        Func<Task> act = async () => await _repository.GetById(paymentId);
 
-        act.Should().Throw<PaymentNotFoundException>()
+        act.Should().ThrowAsync<PaymentNotFoundException>()
             .WithMessage($"Payment with ID {paymentId} not found.");
     }
 
@@ -118,7 +118,7 @@ public class InMemoryPaymentsRepositoryTest
             .WithCardExpiryYear(2025)
             .WithCardCvv("123")
             .Build();
-        Func<Task> act = () => _repository.Update(payment);
+        Func<Task> act = async () => await _repository.Update(payment);
 
         act.Should().ThrowAsync<PaymentNotFoundException>()
             .WithMessage($"Payment with ID {paymentId} not found.");
