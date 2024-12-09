@@ -17,6 +17,8 @@ PaymentGateway.sln
 
 Feel free to change the structure of the solution, use a different test library etc.
 
+# Get Started
+
 
 
 # Test Coverage
@@ -38,6 +40,6 @@ Feel free to change the structure of the solution, use a different test library 
 - [ ] Load test - K6
 - [X] Dockerize the service
 - [ ] Script to build, execute app and run tests
-- [ ] Add support for Observability https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel
+- [X] Add support for Observability https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel
 - [X] Create Github repo with CI
 - [X] Add CD
