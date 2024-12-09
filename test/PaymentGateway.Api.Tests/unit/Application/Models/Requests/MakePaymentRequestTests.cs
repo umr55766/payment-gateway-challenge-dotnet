@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 using PaymentGateway.Api.Application.Models.Requests;
 
-namespace PaymentGateway.Api.Tests.unit.Domain.Models.Requests;
+namespace PaymentGateway.Api.Tests.unit.Application.Models.Requests;
 
 public class MakePaymentRequestTests
 {

@@ -15,7 +15,7 @@ using PaymentGateway.Api.Application.Models.Responses;
 using PaymentGateway.Api.Infrastructure.HttpClients;
 using PaymentGateway.Api.Infrastructure.Settings;
 
-namespace PaymentGateway.Api.Tests.Domain.HttpClients;
+namespace PaymentGateway.Api.Tests.unit.Infrastructure.HttpClients;
 
 public class BankHttpClientTest
 {

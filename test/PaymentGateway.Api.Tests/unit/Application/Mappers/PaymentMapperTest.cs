@@ -3,7 +3,7 @@ using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Application.Models.Requests;
 using PaymentGateway.Api.Domain.Entities;
 
-namespace PaymentGateway.Api.Tests.Domain.Mappers;
+namespace PaymentGateway.Api.Tests.unit.Application.Mappers;
 
 public class PaymentMapperTest
 {

@@ -14,7 +14,7 @@ using PaymentGateway.Api.Domain.Exceptions;
 using PaymentGateway.Api.Infrastructure.HttpClients;
 using PaymentGateway.Api.Infrastructure.Repositories;
 
-namespace PaymentGateway.Api.Tests.unit.Domain.Services;
+namespace PaymentGateway.Api.Tests.unit.Application.Services;
 
 public class PaymentServiceTests
 {

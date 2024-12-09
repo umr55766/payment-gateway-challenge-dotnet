@@ -5,7 +5,7 @@ using PaymentGateway.Api.Domain.Builders;
 using PaymentGateway.Api.Domain.Exceptions;
 using PaymentGateway.Api.Infrastructure.Repositories;
 
-namespace PaymentGateway.Api.Tests.unit.Domain.Repositories;
+namespace PaymentGateway.Api.Tests.unit.Infrastructure.Repositories;
 
 public class InMemoryPaymentsRepositoryTest
 {
