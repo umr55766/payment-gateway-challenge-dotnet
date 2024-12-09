@@ -13,10 +13,9 @@ namespace PaymentGateway.Api.Application.Models.Requests
         public int Amount { get; set; }
         public string? CVV { get; set; }
 
-        // Validate the fields manually within the IsValid method
         public List<string> Validate()
         {
-            List<string> errorMessages = new List<string>();
+            List<string> errorMessages = [];
 
             // CardNumber validation
             if (string.IsNullOrEmpty(CardNumber))
