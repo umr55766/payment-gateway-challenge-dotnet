@@ -18,8 +18,38 @@ PaymentGateway.sln
 Feel free to change the structure of the solution, use a different test library etc.
 
 # Get Started
+1. Make sure you have docker setup & docker-compose installed in your machine
+2. Run `docker-compose up --build` (to build and run the containers)
+3. You can access the swagger [here](http://localhost:5001/swagger/index.html)
+4. Run smoke test `./test/PaymentGateway.Api.Tests/smoke/smoke_test.sh`
+5. Run contact test `node test/PaymentGateway.Api.Tests/contract/contract_test.js` (Make sure you have node installed in your system)
+6. Run unit test `dotnet test` (Make sure you have .NET 8 SDK installed in your machine - [Refer here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0))
 
+### Sample Payload for testing
 
+Successful Payment
+```
+{
+  "cardNumber": "2222405343248877",
+  "expiryMonth": "04",
+  "expiryYear": "2025",
+  "currency": "GBP",
+  "amount": 100,
+  "cvv": "123"
+}
+```
+Failed Payment
+```
+{
+  "cardNumber": "2222405343248112",
+  "expiryMonth": "01",
+  "expiryYear": "2026",
+  "currency": "USD",
+  "amount": 60000,
+  "cvv": "456"
+}
+```
+You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.html)
 
 # Test Coverage
 ![codecov](https://codecov.io/gh/umr55766/payment-gateway-challenge-dotnet/branch/main/graph/badge.svg)
