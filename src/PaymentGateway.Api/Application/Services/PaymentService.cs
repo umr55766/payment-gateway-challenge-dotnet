@@ -38,7 +38,8 @@ public class PaymentService
 
     public async Task<GetPaymentResponse> GetPaymentDetails(Guid id)
     {
-        return PaymentMapper.MapToGetPaymentResponse(await _paymentRepository.GetById(id));
+        Payment payment = await _paymentRepository.GetById(id);
+        return PaymentMapper.MapToGetPaymentResponse(payment);
     }
 
     private async Task SaveResponseInDatabase(Payment payment, BankResponse bankResponse)
