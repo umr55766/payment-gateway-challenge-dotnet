@@ -217,6 +217,102 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Make rejected payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Assert the response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).is.not.null;",
+							"    pm.expect(jsonData.status).is.eql(\"Rejected\");",
+							"});",
+							"",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"PAYMENT_ID\", jsonData.id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get rejected Payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Assert the response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).is.eql(pm.environment.get(\"PAYMENT_ID\"));",
+							"    pm.expect(jsonData.status).is.eql(\"Rejected\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5001/api/payments/{{PAYMENT_ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"payments",
+						"{{PAYMENT_ID}}"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"variable": [
