@@ -37,29 +37,6 @@ public class PaymentMapperTest
     }
 
     [Fact]
-    public void MapToBankRequest_ValidPayment_ReturnsBankRequest()
-    {
-        // Arrange
-        var payment = new Payment(
-            Guid.NewGuid(),
-            PaymentStatus.Pending,
-            new Money(1000, "USD", 2),
-            new Card("4111111111111111", 12, 2030, "123")
-        );
-
-        // Act
-        var bankRequest = PaymentMapper.MapToBankRequest(payment);
-
-        // Assert
-        Assert.NotNull(bankRequest);
-        Assert.Equal(payment.Money.Amount, bankRequest.Amount);
-        Assert.Equal(payment.Money.Currency, bankRequest.Currency);
-        Assert.Equal(payment.Card.Number, bankRequest.CardNumber);
-        Assert.Equal($"{payment.Card.ExpiryMonth}/{payment.Card.ExpiryYear}", bankRequest.ExpiryDate);
-        Assert.Equal(payment.Card.Cvv, bankRequest.Cvv);
-    }
-
-    [Fact]
     public void MapToMakePaymentResponse_ValidPayment_ReturnsResponse()
     {
         // Arrange

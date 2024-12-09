@@ -28,18 +28,6 @@ public static class PaymentMapper
             .Build();
     }
 
-    public static BankRequest MapToBankRequest(Payment payment)
-    {
-        return new BankRequest
-        {
-            CardNumber = payment.Card.Number,
-            ExpiryDate = $"{payment.Card.ExpiryMonth:D2}/{payment.Card.ExpiryYear}",
-            Currency = payment.Money.Currency,
-            Amount = (int)payment.Money.Amount,
-            Cvv = payment.Card.Cvv
-        };
-    }
-
     public static MakePaymentResponse MapToResponse(Payment payment)
     {
         return new MakePaymentResponse
