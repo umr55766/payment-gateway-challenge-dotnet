@@ -31,6 +31,7 @@ Feel free to change the structure of the solution, use a different test library 
 6. Run contact test `node test/PaymentGateway.Api.Tests/contract/contract_test.js` (Make sure you have node installed in your system)
 ![Contract](https://i.ibb.co/dt4MS7x/Screenshot-2024-12-09-at-11-42-44.png)
 7. Run unit test `dotnet test` (Make sure you have .NET 8 SDK installed in your machine - [Refer here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0))
+![Unit test](https://i.ibb.co/PjW7t6F/Screenshot-2024-12-09-at-12-12-24.png)
 
 ### Sample Payload for testing
 
