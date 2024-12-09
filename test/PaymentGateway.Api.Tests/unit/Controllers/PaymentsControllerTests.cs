@@ -69,13 +69,10 @@ public class PaymentsControllerTests
     public async Task ProcessAPaymentWithInvalidPayload()
     {
         var response = await _client.PostAsync($"/api/Payments", new StringContent(JsonSerializer.Serialize(new MakePaymentRequest()), Encoding.UTF8, "application/json"));
-        
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        response.Content.ReadAsStringAsync().Result.Contains("CVV is required").Should().BeTrue();
-        response.Content.ReadAsStringAsync().Result.Contains("Currency is required").Should().BeTrue();
-        response.Content.ReadAsStringAsync().Result.Contains("Card number is required").Should().BeTrue();
-        response.Content.ReadAsStringAsync().Result.Contains("Invalid expiry year").Should().BeTrue();
-        response.Content.ReadAsStringAsync().Result.Contains("Expiry month must be between 1 and 12").Should().BeTrue();
+        var paymentResponse = await response.Content.ReadFromJsonAsync<MakePaymentResponse>();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        paymentResponse!.Id.Should().NotBeEmpty();
+        paymentResponse.Status.Should().Be(PaymentStatus.Rejected.ToString());
     }
     
     [Fact]

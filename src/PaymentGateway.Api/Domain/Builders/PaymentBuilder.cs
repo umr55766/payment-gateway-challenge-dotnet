@@ -1,6 +1,6 @@
 using PaymentGateway.Api.Application.Models.Enums;
-using PaymentGateway.Api.Application.Models.Requests;
 using PaymentGateway.Api.Domain.Entities;
+using PaymentGateway.Api.Domain.ValueObjects;
 
 namespace PaymentGateway.Api.Domain.Builders;
 
@@ -80,27 +80,5 @@ public class PaymentBuilder
         _money = new Money(_amount, _currency, _precision);
         _card = new Card(_cardNumber, _cardExpiryMonth, _cardExpiryYear, _cvv);
         return new Payment(_id, _status, _money, _card);
-    }
-
-    public PaymentBuilder FromRequest(MakePaymentRequest request)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        if (!request.IsValid())
-        {
-            throw new InvalidOperationException("Invalid MakePaymentRequest.");
-        }
-
-        _id = Guid.NewGuid();
-        _status = PaymentStatus.Pending;
-        _amount = request.Amount;
-        _currency = request.Currency;
-        _precision = 2;
-        _cardNumber = request.CardNumber;
-        _cardExpiryMonth = request.ExpiryMonth;
-        _cardExpiryYear = request.ExpiryYear;
-        _cvv = request.CVV;
-
-        return this;
     }
 }

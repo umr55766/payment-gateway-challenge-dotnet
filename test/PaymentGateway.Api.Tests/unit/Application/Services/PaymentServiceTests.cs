@@ -68,7 +68,10 @@ public class PaymentServiceTests
     public async Task MakePaymentAsync_InvalidRequest_ThrowsException()
     {
         var request = new MakePaymentRequest();
-        await Assert.ThrowsAsync<ArgumentException>(() => _paymentService.MakePayment(request));
+        var response = await _paymentService.MakePayment(request);
+        response.Should().NotBeNull();
+        response.Id.Should().NotBeNull();
+        response.Status.Should().Be(PaymentStatus.Rejected.ToString());
         _bankClientMock.Verify(client => client.MakePaymentAsync(It.IsAny<BankRequest>()), Times.Never);
     }
 

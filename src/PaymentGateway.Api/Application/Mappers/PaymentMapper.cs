@@ -6,10 +6,15 @@ using PaymentGateway.Api.Domain.Entities;
 
 namespace PaymentGateway.Api.Application.Mappers;
 
-public class PaymentMapper
+public static class PaymentMapper
 {
     public static Payment MapToPayment(MakePaymentRequest request)
     {
+        if (request.Validate().Count != 0)
+        {
+            return Payment.Rejected();
+        }
+        
         return new PaymentBuilder()
             .WithId(Guid.NewGuid())
             .WithAmount(request.Amount)

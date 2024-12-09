@@ -3,6 +3,7 @@ using FluentAssertions;
 using PaymentGateway.Api.Application.Mappers;
 using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Domain.Entities;
+using PaymentGateway.Api.Domain.ValueObjects;
 
 namespace PaymentGateway.Api.Tests.unit.Application.Mappers;
 

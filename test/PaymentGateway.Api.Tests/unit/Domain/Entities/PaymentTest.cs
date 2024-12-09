@@ -3,8 +3,9 @@ using FluentAssertions;
 using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Application.Models.Responses;
 using PaymentGateway.Api.Domain.Entities;
+using PaymentGateway.Api.Domain.ValueObjects;
 
-namespace PaymentGateway.Api.Tests.unit.Domain.Aggregate;
+namespace PaymentGateway.Api.Tests.unit.Domain.Entities;
 
 public class PaymentTest
 {

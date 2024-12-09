@@ -1,7 +1,6 @@
 using FluentAssertions;
 
 using PaymentGateway.Api.Application.Models.Enums;
-using PaymentGateway.Api.Application.Models.Requests;
 using PaymentGateway.Api.Domain.Builders;
 
 namespace PaymentGateway.Api.Tests.unit.Domain.Builders;
@@ -12,14 +11,14 @@ public class PaymentBuilderTest
     public void PaymentBuilder_ShouldBuildPayment_WithValidValues()
     {
         var paymentId = Guid.NewGuid();
-        var paymentStatus = PaymentStatus.Authorized;
-        var amount = 1000;
-        var currency = "USD";
-        var precision = 2;
-        var cardNumber = "1234567812345678";
-        var cardExpiryMonth = 12;
-        var cardExpiryYear = 2025;
-        var cvv = "123";
+        const PaymentStatus paymentStatus = PaymentStatus.Authorized;
+        const int amount = 1000;
+        const string currency = "USD";
+        const int precision = 2;
+        const string cardNumber = "1234567812345678";
+        const int cardExpiryMonth = 12;
+        const int cardExpiryYear = 2025;
+        const string cvv = "123";
 
         var payment = new PaymentBuilder()
             .WithId(paymentId)
@@ -52,51 +51,5 @@ public class PaymentBuilderTest
 
         action.Should().Throw<ArgumentException>()
             .WithMessage("Value cannot be null. (Parameter '_id')");
-    }
-    
-    [Fact]
-    public void FromRequest_ShouldPopulateBuilder_WhenRequestIsValid()
-    {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "1234567890123456",
-            ExpiryMonth = 12,
-            ExpiryYear = DateTime.Now.Year + 1,
-            Currency = "USD",
-            Amount = 1000,
-            CVV = "123"
-        };
-        var builder = new PaymentBuilder();
-
-        builder.FromRequest(request);
-
-        var payment = builder.Build();
-        payment.Should().NotBeNull();
-        payment.Money.Amount.Should().Be(1000);
-        payment.Money.Currency.Should().Be("USD");
-        payment.Card.Number.Should().Be("1234567890123456");
-        payment.Card.ExpiryMonth.Should().Be(12);
-        payment.Card.ExpiryYear.Should().Be(DateTime.Now.Year + 1);
-        payment.Card.Cvv.Should().Be("123");
-        payment.Status.Should().Be(PaymentStatus.Pending);
-    }
-
-    [Fact]
-    public void FromRequest_ShouldThrowException_WhenRequestIsInvalid()
-    {
-        var request = new MakePaymentRequest
-        {
-            CardNumber = "", // Invalid card number
-            ExpiryMonth = 13, // Invalid month
-            ExpiryYear = DateTime.Now.Year - 1, // Invalid year
-            Currency = "XYZ", // Invalid currency
-            Amount = -100, // Invalid amount
-            CVV = "12" // Invalid CVV
-        };
-        var builder = new PaymentBuilder();
-
-        var act = () => builder.FromRequest(request);
-
-        act.Should().Throw<InvalidOperationException>().WithMessage("Invalid MakePaymentRequest.");
     }
 }

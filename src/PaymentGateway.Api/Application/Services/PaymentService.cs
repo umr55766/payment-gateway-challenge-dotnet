@@ -29,6 +29,12 @@ public class PaymentService
     public async Task<MakePaymentResponse> MakePayment(MakePaymentRequest request)
     {
         Payment payment = InitiateAPayment(request);
+
+        if (payment.IsRejected())
+        {
+            return PaymentMapper.MapToResponse(payment);
+        }
+
         BankResponse bankResponse = await ProcessPaymentWithBank(payment);
         await SaveResponseInDatabase(payment, bankResponse);
         // Publish Event/Monitoring metrics
@@ -57,7 +63,7 @@ public class PaymentService
 
     private Payment InitiateAPayment(MakePaymentRequest request)
     {
-        var payment = PaymentMapper.MapToPayment(request);
+        Payment payment = PaymentMapper.MapToPayment(request);   
         _paymentRepository.Add(payment);
         
         _paymentAttempts.Add(1);

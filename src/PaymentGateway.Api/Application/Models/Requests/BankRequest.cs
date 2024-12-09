@@ -11,7 +11,7 @@ public class BankRequest
     public required string ExpiryDate { get; init; }
     
     [JsonPropertyName("currency")]
-    public required string Currency { get; init; }
+    public required string? Currency { get; init; }
     
     [JsonPropertyName("amount")]
     public int Amount { get; init; }

@@ -1,9 +1,9 @@
-namespace PaymentGateway.Api.Domain.Entities;
+namespace PaymentGateway.Api.Domain.ValueObjects;
 
 public class Money
 {
     public int Amount { get; private set; }
-    public string Currency { get; private set; }
+    public string? Currency { get; private set; }
     public int Precision { get; private set; }
 
     public Money(int amount, string? currency, int precision)
@@ -27,5 +27,9 @@ public class Money
         Amount = amount;
         Currency = currency.ToUpper();
         Precision = precision;
+    }
+
+    public Money()
+    {
     }
 }

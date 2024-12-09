@@ -1,9 +1,9 @@
-namespace PaymentGateway.Api.Domain.Entities;
+namespace PaymentGateway.Api.Domain.ValueObjects;
 
 public class Card
 {
     public string? Number { get; set; }
-    public string LastFourDigits { get; private set; }
+    public string? LastFourDigits { get; private set; }
     public int ExpiryMonth { get; private set; }
     public int ExpiryYear { get; private set; }
     public string? Cvv { get; private set; }
@@ -32,5 +32,9 @@ public class Card
         if ((cvv.Length != 3 && cvv.Length != 4))
             throw new ArgumentException("CVV must be a numeric string with 3 or 4 digits.");
         Cvv = cvv;
+    }
+
+    public Card()
+    {
     }
 }
