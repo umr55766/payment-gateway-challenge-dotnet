@@ -77,7 +77,7 @@ You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.
 - [X] Integration test - Newman, Postman
 - [ ] Load test - K6
 - [X] Dockerize the service
-- [ ] Script to build, execute app and run tests
+- [X] Script to build, execute app and run tests
 - [X] Add support for Observability https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel
 - [X] Create Github repo with CI
 - [X] Add CD
