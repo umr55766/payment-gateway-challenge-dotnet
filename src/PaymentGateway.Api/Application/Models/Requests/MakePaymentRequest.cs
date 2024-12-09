@@ -47,7 +47,7 @@ namespace PaymentGateway.Api.Application.Models.Requests
 
             // Amount validation
             if (Amount < 0)
-                errorMessages.Add("Amount must be greater than 0.");
+                errorMessages.Add("Amount must be positive value.");
             else if (Amount % 1 != 0)
             {
                 errorMessages.Add("Amount must be an integer and not a floating-point value.");
