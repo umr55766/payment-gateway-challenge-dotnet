@@ -38,11 +38,15 @@ public class MakePaymentRequestTests
     }
 
     [Fact]
-    public void ShouldFailValidation_ForInvalidExpiryYear()
+    public void ShouldFailValidation_ForInvalidExpiryDate()
     {
         var request = CreateValidRequest();
         request.ExpiryYear = DateTime.Now.Year - 1;
-        request.Validate().Should().Contain("Invalid expiry year.");
+        request.Validate().Should().Contain("Expiry date must be in the future.");
+        
+        request.ExpiryYear = DateTime.Now.Year;
+        request.ExpiryMonth = DateTime.Now.Month - 1;
+        request.Validate().Should().Contain("Expiry date must be in the future.");
     }
 
     [Fact]

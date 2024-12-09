@@ -29,9 +29,15 @@ namespace PaymentGateway.Api.Application.Models.Requests
             if (ExpiryMonth < 1 || ExpiryMonth > 12)
                 errorMessages.Add("Expiry month must be between 1 and 12.");
 
-            // ExpiryYear validation
-            if (ExpiryYear < 2024 || ExpiryYear > 3000)
-                errorMessages.Add("Invalid expiry year.");
+            // Expiry should in future
+            if (ExpiryYear == DateTime.Now.Year && ExpiryMonth < DateTime.Now.Month)
+            {
+                errorMessages.Add("Expiry date must be in the future.");
+            }
+            else if (ExpiryYear < DateTime.Now.Year)
+            {
+                errorMessages.Add("Expiry date must be in the future.");
+            }
 
             // Currency validation
             if (string.IsNullOrEmpty(Currency))
