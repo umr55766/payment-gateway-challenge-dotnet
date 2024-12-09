@@ -109,7 +109,7 @@ public class PaymentsControllerTests
             .WithCardExpiryMonth(2)
             .WithCardExpiryYear(2025)
             .Build();
-        _paymentsRepository.Add(payment);
+        await _paymentsRepository.Add(payment);
 
         var response = await _client.GetAsync($"/api/Payments/{payment.Id}");
         var paymentResponse = await response.Content.ReadFromJsonAsync<GetPaymentResponse>();

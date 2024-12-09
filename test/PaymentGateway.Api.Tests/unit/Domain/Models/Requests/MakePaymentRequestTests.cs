@@ -6,7 +6,7 @@ namespace PaymentGateway.Api.Tests.unit.Domain.Models.Requests;
 
 public class MakePaymentRequestTests
 {
-    private IList<ValidationResult> ValidateModel(object model)
+    private static List<ValidationResult> ValidateModel(object model)
     {
         var results = new List<ValidationResult>();
         var context = new ValidationContext(model, serviceProvider: null, items: null);
@@ -14,7 +14,7 @@ public class MakePaymentRequestTests
         return results;
     }
 
-    private MakePaymentRequest CreateValidRequest()
+    private static MakePaymentRequest CreateValidRequest()
     {
         return new MakePaymentRequest
         {
@@ -33,7 +33,7 @@ public class MakePaymentRequestTests
         var request = CreateValidRequest();
         request.CardNumber = "123";
         var validationResults = ValidateModel(request);
-        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Card number must be between 14 and 19 digits"));
+        Assert.Contains(validationResults, v => v.ErrorMessage!.Contains("Card number must be between 14 and 19 digits"));
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class MakePaymentRequestTests
         var request = CreateValidRequest();
         request.ExpiryMonth = 13;
         var validationResults = ValidateModel(request);
-        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Expiry month must be between 1 and 12"));
+        Assert.Contains(validationResults, v => v.ErrorMessage!.Contains("Expiry month must be between 1 and 12"));
     }
 
     [Fact]
@@ -51,7 +51,7 @@ public class MakePaymentRequestTests
         var request = CreateValidRequest();
         request.ExpiryYear = DateTime.Now.Year - 1;
         var validationResults = ValidateModel(request);
-        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Invalid expiry year"));
+        Assert.Contains(validationResults, v => v.ErrorMessage!.Contains("Invalid expiry year"));
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public class MakePaymentRequestTests
         var request = CreateValidRequest();
         request.Currency = "INR";
         var validationResults = ValidateModel(request);
-        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Currency must be one of the following"));
+        Assert.Contains(validationResults, v => v.ErrorMessage!.Contains("Currency must be one of the following"));
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public class MakePaymentRequestTests
         var request = CreateValidRequest();
         request.Amount = -10;
         var validationResults = ValidateModel(request);
-        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("Amount must be greater than 0"));
+        Assert.Contains(validationResults, v => v.ErrorMessage!.Contains("Amount must be greater than 0"));
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public class MakePaymentRequestTests
         var request = CreateValidRequest();
         request.CVV = "12";
         var validationResults = ValidateModel(request);
-        Assert.Contains(validationResults, v => v.ErrorMessage.Contains("CVV must be 3 or 4 digits"));
+        Assert.Contains(validationResults, v => v.ErrorMessage!.Contains("CVV must be 3 or 4 digits"));
     }
 
     [Fact]

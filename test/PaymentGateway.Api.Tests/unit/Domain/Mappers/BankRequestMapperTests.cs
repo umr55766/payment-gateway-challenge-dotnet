@@ -5,7 +5,7 @@ using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Entities;
 
-namespace PaymentGateway.Api.Tests.Domain.Mappers;
+namespace PaymentGateway.Api.Tests.unit.Domain.Mappers;
 
 public class BankRequestMapperTests
 {
@@ -32,7 +32,7 @@ public class BankRequestMapperTests
     [Fact]
     public void MapToBankRequest_ShouldThrowException_WhenPaymentIsNull()
     {
-        var act = () => BankRequestMapper.MapToBankRequest(null);
+        var act = () => BankRequestMapper.MapToBankRequest(null!);
         act.Should().Throw<ArgumentNullException>().WithMessage("Payment cannot be null. (Parameter 'payment')");
     }
 }

@@ -5,7 +5,7 @@ using PaymentGateway.Api.Application.Models.Responses;
 using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Entities;
 
-namespace PaymentGateway.Api.Tests.Domain.Aggregate;
+namespace PaymentGateway.Api.Tests.unit.Domain.Aggregate;
 
 public class PaymentTest
 {
@@ -33,7 +33,7 @@ public class PaymentTest
         var paymentStatus = PaymentStatus.Authorized;
         Card card = new Card("1234567812345678", 12, 2025, "123");
 
-        Action action = () => new Payment(paymentId, paymentStatus, null, card);
+        Action action = () => new Payment(paymentId, paymentStatus, null!, card);
 
         action.Should().Throw<ArgumentNullException>()
             .WithMessage("Value cannot be null. (Parameter 'money')");
@@ -43,10 +43,10 @@ public class PaymentTest
     public void Payment_ShouldThrowException_WhenCardIsNull()
     {
         var paymentId = Guid.NewGuid();
-        var paymentStatus = PaymentStatus.Authorized;
+        const PaymentStatus paymentStatus = PaymentStatus.Authorized;
         var money = new Money(1000, "USD", 2);
 
-        Action action = () => new Payment(paymentId, paymentStatus, money, null);
+        Action action = () => new Payment(paymentId, paymentStatus, money, null!);
 
         action.Should().Throw<ArgumentNullException>()
             .WithMessage("Value cannot be null. (Parameter 'card')");

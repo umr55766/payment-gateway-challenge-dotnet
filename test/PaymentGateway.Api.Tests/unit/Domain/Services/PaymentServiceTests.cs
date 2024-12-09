@@ -36,9 +36,9 @@ public class PaymentServiceTests
     [Fact]
     public void ShouldValidateDependencies()
     {
-        ((Func<PaymentService>?)(() => new PaymentService(null, null, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
-        ((Func<PaymentService>?)(() => new PaymentService(_paymentRepository, null, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
-        ((Func<PaymentService>?)(() => new PaymentService(null, _bankClientMock.Object, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(null!, null!, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(_paymentRepository, null!, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
+        ((Func<PaymentService>?)(() => new PaymentService(null!, _bankClientMock.Object, _activitySource, _counter))).Should().Throw<ArgumentNullException>();
     }
 
     [Fact]
