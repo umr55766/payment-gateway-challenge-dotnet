@@ -8,6 +8,7 @@ services:
     ports:
       - "5001:80"
     depends_on:
+#      - unit_tests
       - bank_simulator
 
   bank_simulator:
@@ -29,3 +30,31 @@ services:
       - "18888:18888"
       - "4317:18889"
     restart: always
+    
+#  unit_tests:
+#    image: mcr.microsoft.com/dotnet/sdk:8.0
+#    container_name: unit_tests
+#    working_dir: /src
+#    volumes:
+#      - .:/src
+#    command: [ "dotnet", "test" ]
+#
+#  smoke_tests:
+#    image: bash:latest
+#    container_name: smoke_tests
+#    working_dir: /src
+#    volumes:
+#      - .:/src
+#    command: [ "./test/PaymentGateway.Api.Tests/smoke/smoke_test.sh" ]
+#    depends_on:
+#      - app
+#
+#  contract_tests:
+#    image: node:16
+#    container_name: contract_tests
+#    working_dir: /src
+#    volumes:
+#      - .:/src
+#    command: [ "node", "test/PaymentGateway.Api.Tests/contract/contract_test.js" ]
+#    depends_on:
+#      - app
