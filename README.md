@@ -21,9 +21,15 @@ Feel free to change the structure of the solution, use a different test library 
 1. Make sure you have docker setup & docker-compose installed in your machine
 2. Run `docker-compose up --build` (to build and run the containers)
 3. You can access the swagger [here](http://localhost:5001/swagger/index.html)
+![Swagger](https://i.ibb.co/ZJmLSpR/Screenshot-2024-12-09-at-11-42-14.png)
 4. Access Aspire monitoring dashboard [here](http://localhost:18888/login?t=4a90e99a2bc2149d43c9f83a5ccf2963) (Get latest access token from docker logs)
+![Custom metrics](https://i.ibb.co/DfVq40z/Screenshot-2024-12-09-at-11-38-55.png)
+![Traces](https://i.ibb.co/SXHsd3W/Screenshot-2024-12-09-at-11-39-08.png)
+![Logs](https://i.ibb.co/VVz6bzP/Screenshot-2024-12-09-at-11-39-18.png)
 5. Run smoke test `./test/PaymentGateway.Api.Tests/smoke/smoke_test.sh`
+![Smoke](https://i.ibb.co/mtkDkC5/Screenshot-2024-12-09-at-11-42-32.png)
 6. Run contact test `node test/PaymentGateway.Api.Tests/contract/contract_test.js` (Make sure you have node installed in your system)
+![Contract](https://i.ibb.co/dt4MS7x/Screenshot-2024-12-09-at-11-42-44.png)
 7. Run unit test `dotnet test` (Make sure you have .NET 8 SDK installed in your machine - [Refer here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0))
 
 ### Sample Payload for testing
