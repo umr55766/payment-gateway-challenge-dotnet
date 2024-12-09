@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+using PaymentGateway.Api.Application.Models.Requests;
+using PaymentGateway.Api.Application.Models.Responses;
+using PaymentGateway.Api.Application.Services;
 using PaymentGateway.Api.Domain.Exceptions;
-using PaymentGateway.Api.Domain.Models.Requests;
-using PaymentGateway.Api.Domain.Models.Responses;
-using PaymentGateway.Api.Domain.Services;
 
-namespace PaymentGateway.Api.Controllers;
+namespace PaymentGateway.Api.Interfaces.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

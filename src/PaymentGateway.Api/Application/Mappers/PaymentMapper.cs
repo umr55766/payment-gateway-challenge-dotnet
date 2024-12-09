@@ -1,10 +1,10 @@
+using PaymentGateway.Api.Application.Models.Enums;
+using PaymentGateway.Api.Application.Models.Requests;
+using PaymentGateway.Api.Application.Models.Responses;
 using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Builders;
-using PaymentGateway.Api.Domain.Enums;
-using PaymentGateway.Api.Domain.Models.Requests;
-using PaymentGateway.Api.Domain.Models.Responses;
 
-namespace PaymentGateway.Api.Domain.Mappers;
+namespace PaymentGateway.Api.Application.Mappers;
 
 public class PaymentMapper
 {

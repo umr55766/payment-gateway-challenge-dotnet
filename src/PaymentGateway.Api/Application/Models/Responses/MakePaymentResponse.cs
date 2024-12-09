@@ -1,6 +1,4 @@
-﻿using PaymentGateway.Api.Domain.Enums;
-
-namespace PaymentGateway.Api.Domain.Models.Responses;
+﻿namespace PaymentGateway.Api.Application.Models.Responses;
 
 public class MakePaymentResponse
 {

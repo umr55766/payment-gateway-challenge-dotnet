@@ -5,14 +5,14 @@ using FluentAssertions;
 
 using Moq;
 
-using PaymentGateway.Api.Domain.Enums;
+using PaymentGateway.Api.Application.Mappers;
+using PaymentGateway.Api.Application.Models.Enums;
+using PaymentGateway.Api.Application.Models.Requests;
+using PaymentGateway.Api.Application.Models.Responses;
+using PaymentGateway.Api.Application.Services;
 using PaymentGateway.Api.Domain.Exceptions;
-using PaymentGateway.Api.Domain.HttpClients;
-using PaymentGateway.Api.Domain.Mappers;
-using PaymentGateway.Api.Domain.Models.Requests;
-using PaymentGateway.Api.Domain.Models.Responses;
-using PaymentGateway.Api.Domain.Repositories;
-using PaymentGateway.Api.Domain.Services;
+using PaymentGateway.Api.Infrastructure.HttpClients;
+using PaymentGateway.Api.Infrastructure.Repositories;
 
 namespace PaymentGateway.Api.Tests.unit.Domain.Services;
 

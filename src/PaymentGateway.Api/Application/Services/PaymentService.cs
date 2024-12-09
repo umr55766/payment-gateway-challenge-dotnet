@@ -1,14 +1,14 @@
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 
+using PaymentGateway.Api.Application.Mappers;
+using PaymentGateway.Api.Application.Models.Requests;
+using PaymentGateway.Api.Application.Models.Responses;
 using PaymentGateway.Api.Domain.Aggregate;
-using PaymentGateway.Api.Domain.HttpClients;
-using PaymentGateway.Api.Domain.Mappers;
-using PaymentGateway.Api.Domain.Models.Requests;
-using PaymentGateway.Api.Domain.Models.Responses;
-using PaymentGateway.Api.Domain.Repositories;
+using PaymentGateway.Api.Infrastructure.HttpClients;
+using PaymentGateway.Api.Infrastructure.Repositories;
 
-namespace PaymentGateway.Api.Domain.Services;
+namespace PaymentGateway.Api.Application.Services;
 
 public class PaymentService
 {

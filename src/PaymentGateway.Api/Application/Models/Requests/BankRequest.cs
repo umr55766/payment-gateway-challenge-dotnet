@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace PaymentGateway.Api.Domain.Models.Requests;
+namespace PaymentGateway.Api.Application.Models.Requests;
 
 public class BankRequest
 {

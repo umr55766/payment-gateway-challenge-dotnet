@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Options;
 
-using PaymentGateway.Api.Domain.Models.Requests;
-using PaymentGateway.Api.Domain.Models.Responses;
-using PaymentGateway.Api.Domain.Settings;
+using PaymentGateway.Api.Application.Models.Requests;
+using PaymentGateway.Api.Application.Models.Responses;
+using PaymentGateway.Api.Infrastructure.Settings;
 
-namespace PaymentGateway.Api.Domain.HttpClients;
+namespace PaymentGateway.Api.Infrastructure.HttpClients;
 
 public class BankHttpClient : IBankClient
 {

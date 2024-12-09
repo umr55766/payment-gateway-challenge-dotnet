@@ -1,7 +1,7 @@
+using PaymentGateway.Api.Application.Models.Requests;
 using PaymentGateway.Api.Domain.Aggregate;
-using PaymentGateway.Api.Domain.Models.Requests;
 
-namespace PaymentGateway.Api.Domain.Mappers;
+namespace PaymentGateway.Api.Application.Mappers;
 
 public class BankRequestMapper
 {

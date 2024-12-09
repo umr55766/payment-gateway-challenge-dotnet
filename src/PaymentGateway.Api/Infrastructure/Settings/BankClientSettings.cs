@@ -1,4 +1,4 @@
-namespace PaymentGateway.Api.Domain.Settings
+namespace PaymentGateway.Api.Infrastructure.Settings
 {
     public class BankClientSettings
     {

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Concurrent;
 
+using PaymentGateway.Api.Application.Interfaces;
 using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Exceptions;
 
-namespace PaymentGateway.Api.Domain.Repositories;
+namespace PaymentGateway.Api.Infrastructure.Repositories;
 
 public class InMemoryPaymentsRepository : IPaymentRepository
 {

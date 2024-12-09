@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-using PaymentGateway.Api.Domain.Models.Requests;
+using PaymentGateway.Api.Application.Models.Requests;
 
 namespace PaymentGateway.Api.Tests.unit.Domain.Models.Requests;
 

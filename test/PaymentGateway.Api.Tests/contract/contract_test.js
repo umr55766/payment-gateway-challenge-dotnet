@@ -7,7 +7,7 @@ const http = require("http");
 
 // URLs and file paths
 const url = "http://localhost:5001/swagger/v1/swagger.json";
-const expectedFilePath = "expected_contract.json";
+const expectedFilePath = "test/PaymentGateway.Api.Tests/contract/expected_contract.json";
 
 // Helper to sort JSON keys
 function normalizeJson(json) {

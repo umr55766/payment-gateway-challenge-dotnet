@@ -10,13 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Moq;
 
-using PaymentGateway.Api.Controllers;
+using PaymentGateway.Api.Application.Models.Enums;
+using PaymentGateway.Api.Application.Models.Requests;
+using PaymentGateway.Api.Application.Models.Responses;
 using PaymentGateway.Api.Domain.Builders;
-using PaymentGateway.Api.Domain.Enums;
-using PaymentGateway.Api.Domain.HttpClients;
-using PaymentGateway.Api.Domain.Models.Requests;
-using PaymentGateway.Api.Domain.Models.Responses;
-using PaymentGateway.Api.Domain.Repositories;
+using PaymentGateway.Api.Infrastructure.HttpClients;
+using PaymentGateway.Api.Infrastructure.Repositories;
+using PaymentGateway.Api.Interfaces.Controllers;
 
 namespace PaymentGateway.Api.Tests.unit.Controllers;
 

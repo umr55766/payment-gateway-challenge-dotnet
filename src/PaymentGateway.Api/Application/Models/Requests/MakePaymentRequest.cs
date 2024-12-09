@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PaymentGateway.Api.Domain.Models.Requests;
+namespace PaymentGateway.Api.Application.Models.Requests;
 
 public class MakePaymentRequest
 {

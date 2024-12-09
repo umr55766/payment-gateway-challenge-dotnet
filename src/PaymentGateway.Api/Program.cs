@@ -5,10 +5,10 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-using PaymentGateway.Api.Domain.HttpClients;
-using PaymentGateway.Api.Domain.Repositories;
-using PaymentGateway.Api.Domain.Services;
-using PaymentGateway.Api.Domain.Settings;
+using PaymentGateway.Api.Application.Services;
+using PaymentGateway.Api.Infrastructure.HttpClients;
+using PaymentGateway.Api.Infrastructure.Repositories;
+using PaymentGateway.Api.Infrastructure.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 

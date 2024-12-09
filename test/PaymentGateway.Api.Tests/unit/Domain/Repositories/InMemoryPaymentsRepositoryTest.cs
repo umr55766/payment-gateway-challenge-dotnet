@@ -1,9 +1,9 @@
 using FluentAssertions;
 
+using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Domain.Builders;
-using PaymentGateway.Api.Domain.Enums;
 using PaymentGateway.Api.Domain.Exceptions;
-using PaymentGateway.Api.Domain.Repositories;
+using PaymentGateway.Api.Infrastructure.Repositories;
 
 namespace PaymentGateway.Api.Tests.unit.Domain.Repositories;
 
