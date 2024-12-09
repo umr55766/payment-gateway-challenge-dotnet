@@ -9,7 +9,7 @@ public class MakePaymentRequest
     [Required(ErrorMessage = "Card number is required")]
     [StringLength(19, MinimumLength = 14, ErrorMessage = "Card number must be between 14 and 19 digits")]
     [RegularExpression(@"^\d+$", ErrorMessage = "Card number must be numeric")]
-    public string CardNumber { get; set; }
+    public string? CardNumber { get; set; }
 
     [Required(ErrorMessage = "Expiry month is required")]
     [Range(1, 12, ErrorMessage = "Expiry month must be between 1 and 12")]
@@ -21,7 +21,7 @@ public class MakePaymentRequest
 
     [Required(ErrorMessage = "Currency is required")]
     [RegularExpression(ValidCurrencies, ErrorMessage = "Currency must be one of the following: USD, EUR, GBP")]
-    public string Currency { get; set; }
+    public string? Currency { get; set; }
 
     [Required(ErrorMessage = "Amount is required")]
     [Range(0, int.MaxValue, ErrorMessage = "Amount must be greater than 0")]
@@ -30,7 +30,7 @@ public class MakePaymentRequest
     [Required(ErrorMessage = "CVV is required")]
     [StringLength(4, MinimumLength = 3, ErrorMessage = "CVV must be 3 or 4 digits")]
     [RegularExpression(@"^\d+$", ErrorMessage = "CVV must be numeric")]
-    public string CVV { get; set; }
+    public string? CVV { get; set; }
     
     public bool IsValid()
     {

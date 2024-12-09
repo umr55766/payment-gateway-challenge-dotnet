@@ -2,7 +2,6 @@ using FluentAssertions;
 
 using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Application.Models.Responses;
-using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Entities;
 
 namespace PaymentGateway.Api.Tests.unit.Domain.Aggregate;
@@ -31,7 +30,7 @@ public class PaymentTest
     {
         var paymentId = Guid.NewGuid();
         var paymentStatus = PaymentStatus.Authorized;
-        Card card = new Card("1234567812345678", 12, 2025, "123");
+        Card? card = new Card("1234567812345678", 12, 2025, "123");
 
         Action action = () => new Payment(paymentId, paymentStatus, null!, card);
 

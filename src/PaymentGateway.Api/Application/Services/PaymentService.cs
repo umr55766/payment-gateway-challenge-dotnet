@@ -4,7 +4,7 @@ using System.Diagnostics.Metrics;
 using PaymentGateway.Api.Application.Mappers;
 using PaymentGateway.Api.Application.Models.Requests;
 using PaymentGateway.Api.Application.Models.Responses;
-using PaymentGateway.Api.Domain.Aggregate;
+using PaymentGateway.Api.Domain.Entities;
 using PaymentGateway.Api.Infrastructure.HttpClients;
 using PaymentGateway.Api.Infrastructure.Repositories;
 

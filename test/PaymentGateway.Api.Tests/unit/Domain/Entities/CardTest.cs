@@ -29,7 +29,7 @@ public class CardTest
     [InlineData("1234567812345678", 12, 2025, null, "CVV must be a numeric string with 3 or 4 digits.")]
     [InlineData("1234567812345678", 12, 2025, "abc", "CVV must be a numeric string with 3 or 4 digits.")]
     public void Should_Throw_Exception_When_Creating_Card_With_Invalid_Data(
-        string cardNumber, int expiryMonth, int expiryYear, string cvv, string expectedErrorMessage)
+        string? cardNumber, int expiryMonth, int expiryYear, string? cvv, string expectedErrorMessage)
     {
         var exception = Assert.Throws<ArgumentException>(() => new Card(cardNumber, expiryMonth, expiryYear, cvv));
         exception.Message.Should().Be(expectedErrorMessage);

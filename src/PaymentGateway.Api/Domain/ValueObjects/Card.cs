@@ -2,13 +2,13 @@ namespace PaymentGateway.Api.Domain.Entities;
 
 public class Card
 {
-    public string Number { get; set; }
+    public string? Number { get; set; }
     public string LastFourDigits { get; private set; }
     public int ExpiryMonth { get; private set; }
     public int ExpiryYear { get; private set; }
-    public string Cvv { get; private set; }
+    public string? Cvv { get; private set; }
 
-    public Card(string cardNumber, int expiryMonth, int expiryYear, string cvv)
+    public Card(string? cardNumber, int expiryMonth, int expiryYear, string? cvv)
     {
         if (string.IsNullOrEmpty(cardNumber) || !cardNumber.All(char.IsDigit) || cardNumber.Length < 14 || cardNumber.Length > 19)
             throw new ArgumentException("Card number must be between 14 and 19 digits.");

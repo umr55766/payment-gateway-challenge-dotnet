@@ -1,4 +1,4 @@
-using PaymentGateway.Api.Domain.Aggregate;
+using PaymentGateway.Api.Domain.Entities;
 
 namespace PaymentGateway.Api.Application.Interfaces;
 

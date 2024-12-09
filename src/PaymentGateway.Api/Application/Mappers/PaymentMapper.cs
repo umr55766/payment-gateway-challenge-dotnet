@@ -1,8 +1,8 @@
 using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Application.Models.Requests;
 using PaymentGateway.Api.Application.Models.Responses;
-using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Builders;
+using PaymentGateway.Api.Domain.Entities;
 
 namespace PaymentGateway.Api.Application.Mappers;
 

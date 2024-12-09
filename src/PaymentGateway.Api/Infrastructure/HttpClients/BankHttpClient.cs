@@ -10,7 +10,6 @@ public class BankHttpClient : IBankClient
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<BankHttpClient> _logger;
-    private readonly string _baseUrl;
 
     public BankHttpClient(HttpClient httpClient, ILogger<BankHttpClient> logger, IOptions<BankClientSettings> configuration)
     {

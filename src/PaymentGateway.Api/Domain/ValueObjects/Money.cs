@@ -6,7 +6,7 @@ public class Money
     public string Currency { get; private set; }
     public int Precision { get; private set; }
 
-    public Money(int amount, string currency, int precision)
+    public Money(int amount, string? currency, int precision)
     {
         if (string.IsNullOrEmpty(currency))
             throw new ArgumentException("Currency cannot be null or empty.", nameof(currency));

@@ -5,17 +5,17 @@ namespace PaymentGateway.Api.Application.Models.Requests;
 public class BankRequest
 {
     [JsonPropertyName("card_number")]
-    public string CardNumber { get; set; }
+    public string? CardNumber { get; init; }
     
     [JsonPropertyName("expiry_date")]
-    public string ExpiryDate { get; set; }
+    public required string ExpiryDate { get; init; }
     
     [JsonPropertyName("currency")]
-    public string Currency { get; set; }
+    public required string Currency { get; init; }
     
     [JsonPropertyName("amount")]
-    public int Amount { get; set; }
+    public int Amount { get; init; }
     
     [JsonPropertyName("cvv")]
-    public string Cvv { get; set; }
+    public string? Cvv { get; init; }
 }

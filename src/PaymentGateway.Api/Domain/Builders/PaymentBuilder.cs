@@ -1,6 +1,5 @@
 using PaymentGateway.Api.Application.Models.Enums;
 using PaymentGateway.Api.Application.Models.Requests;
-using PaymentGateway.Api.Domain.Aggregate;
 using PaymentGateway.Api.Domain.Entities;
 
 namespace PaymentGateway.Api.Domain.Builders;
@@ -9,15 +8,15 @@ public class PaymentBuilder
 {
     private Guid _id;
     private PaymentStatus _status;
-    private Money _money;
-    private Card _card;
+    private Money? _money;
+    private Card? _card;
     private int _amount;
-    private string _currency;
+    private string? _currency;
     private int _precision;
-    private string _cardNumber;
+    private string? _cardNumber;
     private int _cardExpiryMonth;
     private int _cardExpiryYear;
-    private string _cvv;
+    private string? _cvv;
 
     public PaymentBuilder WithId(Guid id)
     {
@@ -37,7 +36,7 @@ public class PaymentBuilder
         return this;
     }
 
-    public PaymentBuilder WithCurrency(string currency)
+    public PaymentBuilder WithCurrency(string? currency)
     {
         _currency = currency;
         return this;
@@ -49,7 +48,7 @@ public class PaymentBuilder
         return this;
     }
 
-    public PaymentBuilder WithCardNumber(string cardNumber)
+    public PaymentBuilder WithCardNumber(string? cardNumber)
     {
         _cardNumber = cardNumber;
         return this;
@@ -67,7 +66,7 @@ public class PaymentBuilder
         return this;
     }
 
-    public PaymentBuilder WithCardCvv(string cvv)
+    public PaymentBuilder WithCardCvv(string? cvv)
     {
         _cvv = cvv;
         return this;
