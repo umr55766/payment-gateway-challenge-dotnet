@@ -10,7 +10,7 @@ public class PaymentBuilder
     private PaymentStatus _status;
     private Money? _money;
     private Card? _card;
-    private int _amount;
+    private decimal _amount;
     private string? _currency;
     private int _precision;
     private string? _cardNumber;
@@ -30,7 +30,7 @@ public class PaymentBuilder
         return this;
     }
 
-    public PaymentBuilder WithAmount(int amount)
+    public PaymentBuilder WithAmount(Decimal amount)
     {
         _amount = amount;
         return this;

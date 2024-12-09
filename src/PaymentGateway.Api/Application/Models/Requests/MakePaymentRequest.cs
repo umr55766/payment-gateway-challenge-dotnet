@@ -10,7 +10,7 @@ namespace PaymentGateway.Api.Application.Models.Requests
         public int ExpiryMonth { get; set; }
         public int ExpiryYear { get; set; }
         public string? Currency { get; set; }
-        public int Amount { get; set; }
+        public Decimal Amount { get; set; }
         public string? CVV { get; set; }
 
         public List<string> Validate()
@@ -46,8 +46,12 @@ namespace PaymentGateway.Api.Application.Models.Requests
                 errorMessages.Add("Currency must be one of the following: USD, EUR, GBP");
 
             // Amount validation
-            if (Amount <= 0)
+            if (Amount < 0)
                 errorMessages.Add("Amount must be greater than 0.");
+            else if (Amount % 1 != 0)
+            {
+                errorMessages.Add("Amount must be an integer and not a floating-point value.");
+            }
 
             // CVV validation
             if (string.IsNullOrEmpty(CVV))

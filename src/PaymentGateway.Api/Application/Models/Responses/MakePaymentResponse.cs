@@ -8,5 +8,5 @@ public class MakePaymentResponse
     public int ExpiryMonth { get; set; }
     public int ExpiryYear { get; set; }
     public required string? Currency { get; init; }
-    public int Amount { get; init; }
+    public decimal Amount { get; init; }
 }

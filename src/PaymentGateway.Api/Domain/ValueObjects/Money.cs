@@ -2,11 +2,11 @@ namespace PaymentGateway.Api.Domain.ValueObjects;
 
 public class Money
 {
-    public int Amount { get; private set; }
+    public decimal Amount { get; private set; }
     public string? Currency { get; private set; }
     public int Precision { get; private set; }
 
-    public Money(int amount, string? currency, int precision)
+    public Money(decimal amount, string? currency, int precision)
     {
         if (string.IsNullOrEmpty(currency))
             throw new ArgumentException("Currency cannot be null or empty.", nameof(currency));

@@ -35,7 +35,7 @@ public static class PaymentMapper
             CardNumber = payment.Card.Number,
             ExpiryDate = $"{payment.Card.ExpiryMonth:D2}/{payment.Card.ExpiryYear}",
             Currency = payment.Money.Currency,
-            Amount = payment.Money.Amount,
+            Amount = (int)payment.Money.Amount,
             Cvv = payment.Card.Cvv
         };
     }

@@ -63,6 +63,8 @@ public class MakePaymentRequestTests
         var request = CreateValidRequest();
         request.Amount = -10;
         request.Validate().Should().Contain("Amount must be greater than 0.");
+        request.Amount = new decimal(10.5);
+        request.Validate().Should().Contain("Amount must be an integer and not a floating-point value.");
     }
 
     [Fact]
