@@ -77,7 +77,7 @@ You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.
 4. We dont' necessarily need to store full card number as there is no requirements associated to it. I am storing it to just demonstrate that even if we need to store (let's say for scheduled payment/saved card/etc), since it's a very sensitive data and should never be store in plaintext format.
 5. Fixed precision to 2 for now. Ideally it should be based on Currency
 6. Using Decimal to store Amount, as it have better precision and best suited for handling financial data.
-7. Not storing AuthorizationCode, for now, as there is no requirements for it right now. Ideally we should be storing it for future/references. Maybe we need it for refund request, etc.
+7. Not storing AuthorizationCode and Validation Errors, for now, as there is no requirements for it right now. Ideally we should be storing it for future/references. Maybe we need it for refund request, customer support ticket etc.
 8. Authentication have not been implemented, as there is no requirements for it right now.
 9. I have tried following test pyramid model, in which number of unit test > number of integration > number of end-to-end tests.
 10. As finance/payments is an extensive domain. I am following Domain Driven Design. We have Core module which contains core parts/classes of the system.
@@ -89,7 +89,8 @@ You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.
 15. I have followed Test driven development and made small, sustainable commits, that's why you might see a bigger number of commits.
 16. I have integrated with Codecov to track and visualize test code coverage. I'm not targeting 100% code coverage purposefully [[reference]](https://en.wikipedia.org/wiki/Goodhart%27s_law)
 17. I am using Github actions for a simple build pipeline.
-18. Using [k6](https://k6.io/open-source/) for load testing 
+18. Using [k6](https://k6.io/open-source/) for load testing
+19. 
 
 
 # TODO
