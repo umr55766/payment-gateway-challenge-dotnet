@@ -18,7 +18,7 @@ using PaymentGateway.Api.Infrastructure.HttpClients;
 using PaymentGateway.Api.Infrastructure.Repositories;
 using PaymentGateway.Api.Interfaces.Controllers;
 
-namespace PaymentGateway.Api.Tests.unit.Controllers;
+namespace PaymentGateway.Api.Tests.integration.Controllers;
 
 public class PaymentsControllerTests
 {

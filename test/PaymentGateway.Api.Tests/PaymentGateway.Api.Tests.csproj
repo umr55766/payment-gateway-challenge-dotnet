@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="integration\" />
     <Folder Include="unit\Application\" />
     <Folder Include="unit\Infrastructure\" />
     <Folder Include="unit\Interfaces\" />
