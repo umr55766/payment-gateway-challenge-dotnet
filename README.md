@@ -71,7 +71,8 @@ You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.
 
 
 # Assumptions
-1. Fixed precision to 2 for now. Ideally it should be based on Currency
+1. Created only Payments Repository and using it to store full Payments data. Ideally, Card should be stored in another table and Payment should have reference to it. I would like to store Payments in some sort of Ledger, so that we have full history of Payment lifecycle.
+2. Fixed precision to 2 for now. Ideally it should be based on Currency
 2. Using Decimal to store Amount, as it have better precision and best suited for handling financial data.
 3. Not storing AuthorizationCode, for now, as there is no requirements for it right now. Ideally we should be storing it for future/references. Maybe we need it for refund request, etc.
 4. Authentication have not been implemented, as there is no requirements for it right now.
