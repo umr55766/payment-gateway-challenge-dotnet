@@ -63,11 +63,12 @@ public class PaymentService
 
     private Payment InitiateAPayment(MakePaymentRequest request)
     {
+        using var makePaymentActivity = _makePaymentActivitySource.StartActivity("MakingPayment");
+
         Payment payment = PaymentMapper.MapToPayment(request);   
         _paymentRepository.Add(payment);
         
         _paymentAttempts.Add(1);
-        using var makePaymentActivity = _makePaymentActivitySource.StartActivity("MakingPayment");
         makePaymentActivity?.AddTag("currency", request.Currency);
         makePaymentActivity?.AddTag("amount", request.Amount);
         
