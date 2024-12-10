@@ -61,6 +61,9 @@ Failed Payment
 ```
 You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.html)
 
+# Build
+![build](https://github.com/umr55766/payment-gateway-challenge-dotnet/actions/workflows/dotnet.yml/badge.svg)
+
 # Test Coverage
 ![codecov](https://codecov.io/gh/umr55766/payment-gateway-challenge-dotnet/branch/main/graph/badge.svg)
 
