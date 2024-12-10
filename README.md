@@ -65,6 +65,22 @@ You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.
 ![codecov](https://codecov.io/github/umr55766/payment-gateway-challenge-dotnet/graphs/tree.svg?token=A5OH2E0E3B)
 
 
+# Assumptions
+1. Fixed precision to 2 for now. Ideally it should be based on Currency
+2. Using Decimal to store Amount, as it have better precision and best suited for handling financial data.
+3. Not storing AuthorizationCode, for now, as there is no requirements for it right now. Ideally we should be storing it for future/references. Maybe we need it for refund request, etc.
+4. Authentication have not been implemented, as there is no requirements for it right now.
+5. I have tried following test pyramid model, in which number of unit test > number of integration > number of end-to-end tests.
+6. As finance/payments is an extensive domain. I am following Domain Driven Design. We have Core module which contains core parts/classes of the system.
+7. Since software is (mostly) ever evolving, based on business needs, I have used Port & Adapters pattern, so that our solution is modular enough to evolve and adapt to ever-changing business needs. For example, right now we're using InMemoryPaymentsRepository, which uses `ConcurrentDictionary<Guid, Payment>` as the Database, if we need to migrate to use real DB we only need to replace this Repository with real repository and other parts of the code will work out-of-the-box.
+8. I have integrated very basic Observability and Monitory, which logs, custom metrics and traces, just to re-iterate the importance of Observability and Monitor. In real world, of course, we'll be using something more efficient and durable.
+9. There is contract test to ensure we don't contract for the merchants.
+10. Smoke test is end-to-end test. I have kept this to minimal, in accordance with test pyramid model. Just 3, for 3 types of payment Authorized, Declined and Rejected.
+11. I have followed Test driven development and made small, sustainable commits, that's why you might see a bigger number of commits.
+12. I have integrated with Codecov to track and visualize test code coverage.
+13. I am using Github actions for a simple build pipeline.
+
+
 # TODO
 - [X] Make payment endpoint
 - [X] Make payment request validation
