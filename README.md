@@ -31,7 +31,9 @@ Feel free to change the structure of the solution, use a different test library 
 6. Run contact test `node test/PaymentGateway.Api.Tests/contract/contract_test.js` (Make sure you have node installed in your system)
 ![Contract](https://i.ibb.co/dt4MS7x/Screenshot-2024-12-09-at-11-42-44.png)
 7. Run unit test `dotnet test` (Make sure you have .NET 8 SDK installed in your machine - [Refer here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0))
-![Unit test](https://i.ibb.co/PjW7t6F/Screenshot-2024-12-09-at-12-12-24.png)
+   ![Unit test](https://i.ibb.co/PjW7t6F/Screenshot-2024-12-09-at-12-12-24.png)
+8. Run load test `k6 run test/PaymentGateway.Api.Tests/load/load_test.js` (Make sure you have [k6](https://k6.io/open-source/) installed in your system)
+   ![Load test](https://i.ibb.co/M1PJJ3W/Screenshot-2024-12-10-at-17-42-02.png)
 
 ### Sample Payload for testing
 
@@ -73,12 +75,14 @@ You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.
 5. I have tried following test pyramid model, in which number of unit test > number of integration > number of end-to-end tests.
 6. As finance/payments is an extensive domain. I am following Domain Driven Design. We have Core module which contains core parts/classes of the system.
 7. Since software is (mostly) ever evolving, based on business needs, I have used Port & Adapters pattern, so that our solution is modular enough to evolve and adapt to ever-changing business needs. For example, right now we're using InMemoryPaymentsRepository, which uses `ConcurrentDictionary<Guid, Payment>` as the Database, if we need to migrate to use real DB we only need to replace this Repository with real repository and other parts of the code will work out-of-the-box.
+![Port & Adapters](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*3FZGIgynXuegHO4Y.)
 8. I have integrated very basic Observability and Monitory, which logs, custom metrics and traces, just to re-iterate the importance of Observability and Monitor. In real world, of course, we'll be using something more efficient and durable.
 9. There is contract test to ensure we don't contract for the merchants.
 10. Smoke test is end-to-end test. I have kept this to minimal, in accordance with test pyramid model. Just 3, for 3 types of payment Authorized, Declined and Rejected.
 11. I have followed Test driven development and made small, sustainable commits, that's why you might see a bigger number of commits.
-12. I have integrated with Codecov to track and visualize test code coverage.
+12. I have integrated with Codecov to track and visualize test code coverage. I'm not targeting 100% code coverage purposefully [[reference]](https://en.wikipedia.org/wiki/Goodhart%27s_law)
 13. I am using Github actions for a simple build pipeline.
+14. Using [k6](https://k6.io/open-source/) for load testing 
 
 
 # TODO
@@ -91,7 +95,7 @@ You can use Swagger for testing APIs [here](http://localhost:5001/swagger/index.
 - [X] Ensure thread safety
 - [X] Contract test - Swagger, Json
 - [X] Integration test - Newman, Postman
-- [ ] Load test - K6
+- [X] Load test - K6
 - [X] Dockerize the service
 - [X] Script to build, execute app and run tests
 - [X] Add support for Observability https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-with-otel
