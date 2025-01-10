@@ -9,14 +9,14 @@ public class Card
     public int ExpiryMonth { get; private set; }
     public int ExpiryYear { get; private set; }
     public string? Cvv { get; private set; }
-    private string? _encryptedNumber;
+    private readonly string? _encryptedNumber;
     public string? Number
     {
         get
         {
             return string.IsNullOrEmpty(_encryptedNumber) ? null : Decrypt(_encryptedNumber);
         }
-        set
+        private init
         {
             if (string.IsNullOrEmpty(value))
             {
