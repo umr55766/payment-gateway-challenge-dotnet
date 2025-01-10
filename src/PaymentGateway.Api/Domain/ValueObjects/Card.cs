@@ -43,7 +43,9 @@ public class Card
             throw new ArgumentException("Expiry month must be between 1 and 12.");
         ExpiryMonth = expiryMonth;
 
-        if (expiryYear <= DateTime.Now.Year)
+        if (expiryYear < DateTime.Now.Year)
+            throw new ArgumentException("Expiry year must be in the future.");
+        if (expiryMonth < DateTime.Now.Month)
             throw new ArgumentException("Expiry year must be in the future.");
         ExpiryYear = expiryYear;
 
